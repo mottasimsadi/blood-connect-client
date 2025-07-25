@@ -18,12 +18,21 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, userProfile, logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   const mobileMenuRef = useRef(null);
   const userMenuRef = useRef(null);
+
+  useEffect(() => {
+    // Simulate auth state determination
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -75,13 +84,31 @@ const Navbar = () => {
   ];
 
   // Links only for logged in users
-  const authLinks = user
-    ? [{ name: "Funding", href: "/funding", icon: FaMoneyBillWave }]
-    : [];
+  const authLinks =
+    !isLoading && user
+      ? [{ name: "Funding", href: "/funding", icon: FaMoneyBillWave }]
+      : [];
 
   const allLinks = [...commonLinks, ...authLinks];
 
   const isActive = (path) => location.pathname === path;
+
+  if (isLoading) {
+    return (
+      <nav className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50 h-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md">
+              <FaHeart className="h-6 w-6 text-white" />
+            </div>
+            <span className="text-xl font-bold text-[#ef4343]">
+              BloodConnect
+            </span>
+          </Link>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <motion.nav
@@ -131,10 +158,10 @@ const Navbar = () => {
                   <div className="w-10 rounded-full">
                     <img
                       src={
-                        userProfile?.avatar ||
+                        user?.avatar ||
                         "https://img.icons8.com/?size=100&id=H101gtpJBVoh&format=png&color=000000"
                       }
-                      alt={userProfile?.name || "User"}
+                      alt={user?.name || "User"}
                       referrerPolicy="no-referrer"
                     />
                   </div>
@@ -148,10 +175,10 @@ const Navbar = () => {
                   >
                     <li className="px-3 py-2">
                       <p className="text-sm font-medium">
-                        {userProfile?.name || "User"}
+                        {user?.name || "User"}
                       </p>
                       <p className="text-xs text-[#64748b] capitalize">
-                        {userProfile?.role || "Donor"}
+                        {user?.role || "Donor"}
                       </p>
                     </li>
                     <div className="divider my-0"></div>

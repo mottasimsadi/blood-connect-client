@@ -1,0 +1,291 @@
+import { useContext, useState, useRef, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
+import { motion } from "framer-motion";
+import {
+  FaHeart,
+  FaBars,
+  FaTimes,
+  FaUser,
+  FaSignOutAlt,
+  FaTachometerAlt,
+  FaHandHoldingMedical,
+  FaBook,
+  FaMoneyBillWave,
+} from "react-icons/fa";
+import { AuthContext } from "../providers/AuthProvider";
+import Swal from "sweetalert2";
+
+const Navbar = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, userProfile, logOut } = useContext(AuthContext);
+
+  const mobileMenuRef = useRef(null);
+  const userMenuRef = useRef(null);
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Logout Successful",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        setIsUserMenuOpen(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Logout Failed",
+          text: error.message || "Something went wrong",
+        });
+      });
+  };
+
+  // Common links for all users
+  const commonLinks = [
+    {
+      name: "Donation Requests",
+      href: "/donation-requests",
+      icon: FaHandHoldingMedical,
+    },
+    { name: "Blog", href: "/blog", icon: FaBook },
+  ];
+
+  // Links only for logged in users
+  const authLinks = user
+    ? [{ name: "Funding", href: "/funding", icon: FaMoneyBillWave }]
+    : [];
+
+  const allLinks = [...commonLinks, ...authLinks];
+
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300">
+              <FaHeart className="h-6 w-6 text-white" />
+            </div>
+            <span className="text-xl font-bold text-[#ef4343]">
+              BloodConnect
+            </span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {allLinks.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`flex items-center text-sm font-medium transition-colors hover:text-[#ef4343] ${
+                  isActive(item.href)
+                    ? "text-[#ef4343] border-b-2 border-[#ef4343]"
+                    : "text-[#64748b]"
+                }`}
+              >
+                <item.icon className="mr-1.5" />
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Auth Section */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  className="btn btn-ghost btn-circle avatar hover:bg-[#ef4343]/10"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  aria-label="User menu"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      src={
+                        userProfile?.avatar ||
+                        "https://img.icons8.com/?size=100&id=H101gtpJBVoh&format=png&color=000000"
+                      }
+                      alt={userProfile?.name || "User"}
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                </button>
+
+                {isUserMenuOpen && (
+                  <motion.ul
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute right-0 mt-3 w-56 z-50 bg-white rounded-lg shadow-lg p-2 border border-gray-100"
+                  >
+                    <li className="px-3 py-2">
+                      <p className="text-sm font-medium">
+                        {userProfile?.name || "User"}
+                      </p>
+                      <p className="text-xs text-[#64748b] capitalize">
+                        {userProfile?.role || "Donor"}
+                      </p>
+                    </li>
+                    <div className="divider my-0"></div>
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center hover:bg-[#ef4343]/10 hover:text-[#ef4343] px-3 py-2 rounded-lg"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <FaTachometerAlt className="mr-2" />
+                        Dashboard
+                      </Link>
+                    </li>
+                    <div className="divider my-0"></div>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center text-red-500 hover:bg-red-50 w-full px-3 py-2 rounded-lg text-left"
+                      >
+                        <FaSignOutAlt className="mr-2" />
+                        Log out
+                      </button>
+                    </li>
+                  </motion.ul>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <Link
+                  to="/login"
+                  className="btn bg-transparent border-none shadow-none text-[#64748b] hover:text-white hover:bg-[#ef4343]"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="btn bg-[#ef4343] border-none hover:opacity-70 text-white"
+                >
+                  Join as Donor
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden" ref={mobileMenuRef}>
+            <button
+              className="btn text-[#ef4343] bg-transparent shadow-none border-[#ef4343] hover:bg-[#ef4343]/10 btn-circle"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <FaTimes className="h-5 w-5" />
+              ) : (
+                <FaBars className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden"
+          >
+            <div className="py-4 space-y-2">
+              {allLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg mx-2 ${
+                    isActive(item.href)
+                      ? "bg-[#ef4343] text-white"
+                      : "text-[#64748b] hover:bg-[#ef4343] hover:text-white"
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <item.icon className="mr-3" />
+                  {item.name}
+                </Link>
+              ))}
+
+              <div className="border-t border-gray-200 mt-3 pt-3 mx-2">
+                {user ? (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className="flex items-center px-4 py-3 text-sm font-medium text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <FaTachometerAlt className="mr-3" />
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-lg"
+                    >
+                      <FaSignOutAlt className="mr-1" />
+                      Log out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="btn bg-transparent shadow-none text-[#ef4343] border-[#ef4343] w-full justify-center mb-2"
+                    >
+                      <FaUser className="mr-1" />
+                      Login
+                    </Link>
+                    <Link
+                      to="/register"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="btn bg-[#ef4343] border-none hover:opacity-70 w-full"
+                    >
+                      Join as Donor
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </motion.nav>
+  );
+};
+
+export default Navbar;

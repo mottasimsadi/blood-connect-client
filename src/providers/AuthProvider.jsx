@@ -48,14 +48,14 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("🚀 ~ unsubscribe ~ currentUser:", currentUser)
+      console.log("🚀 ~ unsubscribe ~ currentUser:", currentUser);
       setUser(currentUser);
-      
+
       axios.get("http://localhost:3000", {
         headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`
-        }
-      })
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
 
       setLoading(false);
     });

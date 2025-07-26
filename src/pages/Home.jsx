@@ -59,6 +59,31 @@ const Home = () => {
     },
   ];
 
+  // Steps data
+  const steps = [
+    {
+      step: "01",
+      title: "Register as Donor",
+      description: "Create your profile with blood group and location details",
+      icon: FaUsers,
+      bgColor: "bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]",
+    },
+    {
+      step: "02",
+      title: "Get Notified",
+      description: "Receive notifications when someone needs your blood type",
+      icon: FaClock,
+      bgColor: "bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]",
+    },
+    {
+      step: "03",
+      title: "Donate & Save Lives",
+      description: "Visit the hospital and make your life-saving donation",
+      icon: FaHeart,
+      bgColor: "bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]",
+    },
+  ];
+
   return (
     <div>
       {/* Hero Section */}
@@ -229,6 +254,55 @@ const Home = () => {
                 <p className="text-gray-600 text-center">
                   {feature.description}
                 </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              How It Works
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Three simple steps to start saving lives
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center relative"
+              >
+                {index < steps.length && (
+                  <div className="md:block absolute top-12 left-2/3 w-1/3 h-0.5 bg-[#ef4343]/30" />
+                )}
+                <div className="relative">
+                  <div
+                    className={`${step.bgColor} text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4`}
+                  >
+                    <step.icon className="h-10 w-10" />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#ef4343] text-white rounded-full flex items-center justify-center text-sm font-bold">
+                    {step.step}
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600">{step.description}</p>
               </motion.div>
             ))}
           </div>

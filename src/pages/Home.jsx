@@ -10,7 +10,12 @@ import {
   FaMobileAlt,
   FaAward,
   FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+  FaExclamationTriangle,
 } from "react-icons/fa";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Home = () => {
   // Features data
@@ -83,6 +88,69 @@ const Home = () => {
       bgColor: "bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]",
     },
   ];
+
+  // Contact information data
+  const contactInfo = [
+    {
+      icon: FaPhone,
+      title: "Emergency Hotline",
+      details: "+880-1234-567890",
+      description: "24/7 emergency blood requests",
+    },
+    {
+      icon: FaEnvelope,
+      title: "Email Support",
+      details: "support@bloodconnect.org",
+      description: "Get help with your account",
+    },
+    {
+      icon: FaMapMarkerAlt,
+      title: "Main Office",
+      details: "123 Health Street, Dhaka",
+      description: "Visit us during office hours",
+    },
+    {
+      icon: FaClock,
+      title: "Support Hours",
+      details: "Mon-Fri: 9AM-6PM",
+      description: "Weekend emergency support available",
+    },
+  ];
+
+  // Form state and handlers
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Show success message
+    await Swal.fire({
+      title: "Message Sent!",
+      text: "We'll get back to you soon.",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#ef4343",
+    });
+
+    // Reset form
+    setFormData({ name: "", email: "", phone: "", message: "" });
+    setIsSubmitting(false);
+  };
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   return (
     <div>
@@ -341,6 +409,182 @@ const Home = () => {
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#ef4343] mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Have questions or need emergency blood? We're here to help 24/7.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300"
+            >
+              <div className="card-body">
+                <h3 className="card-title text-2xl text-base-100 my-6">
+                  Send us a Message
+                </h3>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="form-control">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Enter your full name"
+                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                        required
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="your@email.com"
+                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="form-control">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+880-1234-567890"
+                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                      required
+                    />
+                  </div>
+                  <div className="form-control">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Message *
+                    </label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
+                      className="textarea text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343] w-full "
+                      placeholder="How can we help you? Please describe your question or emergency..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="form-control mt-6">
+                    <button
+                      type="submit"
+                      className="btn bg-[#ef4343] hover:bg-[#d13232] text-white border-none w-full"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <span className="loading loading-spinner loading-sm"></span>
+                          Sending...
+                        </>
+                      ) : (
+                        "Send Message"
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+
+            {/* Contact Information */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-6"
+            >
+              {contactInfo.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="card bg-white shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div className="card-body">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-[#ef4343]/10 p-3 rounded-lg">
+                        <item.icon className="text-[#ef4343] text-xl" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-base-100 mb-1">
+                          {item.title}
+                        </h3>
+                        <p className="text-[#ef4343] font-medium mb-1">
+                          {item.details}
+                        </p>
+                        <p className="text-gray-600 text-sm">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Emergency Notice */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="card bg-gradient-to-r from-[#ef4343] to-[#ff6b8b] text-white shadow-xl"
+              >
+                <div className="card-body">
+                  <div className="flex items-center gap-3 mb-3">
+                    <FaExclamationTriangle className="text-xl" />
+                    <h3 className="text-xl font-bold">
+                      Emergency Blood Request
+                    </h3>
+                  </div>
+                  <p className="mb-4">
+                    For life-threatening emergencies requiring immediate blood
+                    transfusion, please call our emergency hotline or visit the
+                    nearest hospital.
+                  </p>
+                  <Link
+                    to="tel:+8801234567890"
+                    className="btn btn-outline text-sm text-white border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
+                  >
+                    Call Emergency Line
+                  </Link>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>

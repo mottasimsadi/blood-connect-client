@@ -34,8 +34,16 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const updateUser = (userInfo) => {
-    return updateProfile(auth.currentUser, userInfo);
+  const updateUser = (updatedData) => {
+    return updateProfile(auth.currentUser, updatedData).then(() => {
+      // Force the state to reflect the updated profile
+      const updatedUser = {
+        ...auth.currentUser,
+        displayName: updatedData.displayName,
+        photoURL: updatedData.photoURL,
+      };
+      setUser(updatedUser);
+    });
   };
 
   const removeUser = (user) => {

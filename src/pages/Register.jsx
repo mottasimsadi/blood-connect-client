@@ -12,6 +12,8 @@ import {
   FaTint,
   FaEnvelope,
   FaGoogle,
+  FaCity,
+  FaImage,
 } from "react-icons/fa";
 import { districts, upazilas, bloodGroups } from "../data/bangladeshData";
 import { AuthContext } from "../providers/AuthProvider";
@@ -29,10 +31,10 @@ const Register = () => {
     bloodGroup: "",
     district: "",
     upazila: "",
-    avatar: "",
+    photoURL: "",
   });
 
-  const { createUser, googleSignIn } = useContext(AuthContext);
+  const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -78,10 +80,11 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await createUser(formData.email, formData.password, {
-        ...formData,
-        role: "donor",
-        status: "active",
+      await createUser(formData.email, formData.password).then(() => {
+        return updateUser({
+          displayName: formData.name,
+          photoURL: formData.photoURL,
+        });
       });
 
       Swal.fire({
@@ -270,15 +273,19 @@ const Register = () => {
               className="space-y-2"
             >
               <label className="block text-sm font-medium text-[#64748b]">
-                Profile Photo
+                Profile Photo URL (Optional)
               </label>
-              <input
-                name="avatar"
-                type="file"
-                accept="image/*"
-                className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-[#ef4343]/10 file:text-[#ef4343] hover:file:bg-[#ef4343]/20 file:cursor-pointer text-base-100 border border-gray-300 rounded-md w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
-                onChange={handleChange}
-              />
+              <div className="relative">
+                <FaImage className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
+                <input
+                  name="photoURL"
+                  type="url"
+                  value={formData.photoURL}
+                  onChange={handleChange}
+                  placeholder="Enter your photo URL"
+                  className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                />
+              </div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -349,31 +356,36 @@ const Register = () => {
               <label className="block text-sm font-medium text-[#64748b]">
                 Upazila *
               </label>
-              <select
-                className="w-full text-base-100 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
-                value={formData.upazila}
-                onChange={(e) => handleSelectChange("upazila", e.target.value)}
-                name="upazila"
-                disabled={
-                  !formData.district ||
-                  !upazilas[formData.district] ||
-                  upazilas[formData.district].length === 0
-                }
-              >
-                <option value="">
+              <div className="relative">
+                <FaCity className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
+                <select
+                  className="w-full text-base-100 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                  value={formData.upazila}
+                  onChange={(e) =>
+                    handleSelectChange("upazila", e.target.value)
+                  }
+                  name="upazila"
+                  disabled={
+                    !formData.district ||
+                    !upazilas[formData.district] ||
+                    upazilas[formData.district].length === 0
+                  }
+                >
+                  <option value="">
+                    {formData.district &&
+                    (!upazilas[formData.district] ||
+                      upazilas[formData.district].length === 0)
+                      ? "No upazilas available for this district"
+                      : "Select upazila"}
+                  </option>
                   {formData.district &&
-                  (!upazilas[formData.district] ||
-                    upazilas[formData.district].length === 0)
-                    ? "No upazilas available for this district"
-                    : "Select upazila"}
-                </option>
-                {formData.district &&
-                  upazilas[formData.district]?.map((u) => (
-                    <option key={u} value={u}>
-                      {u}
-                    </option>
-                  ))}
-              </select>
+                    upazilas[formData.district]?.map((u) => (
+                      <option key={u} value={u}>
+                        {u}
+                      </option>
+                    ))}
+                </select>
+              </div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

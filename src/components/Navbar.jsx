@@ -158,10 +158,10 @@ const Navbar = () => {
                   <div className="w-10 rounded-full">
                     <img
                       src={
-                        user?.avatar ||
+                        user?.photoURL ||
                         "https://img.icons8.com/?size=100&id=H101gtpJBVoh&format=png&color=000000"
                       }
-                      alt={user?.name || "User"}
+                      alt={user?.displayName || "User"}
                       referrerPolicy="no-referrer"
                     />
                   </div>
@@ -174,33 +174,49 @@ const Navbar = () => {
                     className="absolute right-0 mt-3 w-56 z-50 bg-white rounded-lg shadow-lg p-2 border border-gray-100"
                   >
                     <li className="px-3 py-2">
-                      <p className="text-sm font-medium">
-                        {user?.name || "User"}
+                      <p className="text-sm text-[#ef4343] mb-2 font-medium">
+                        {user?.displayName || "User"}
                       </p>
                       <p className="text-xs text-[#64748b] capitalize">
                         {user?.role || "Donor"}
                       </p>
                     </li>
-                    <div className="divider my-0"></div>
+                    <div className="relative my-2">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-b border-[#64748b]"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-[#64748b]"></span>
+                      </div>
+                    </div>
                     <li>
                       <Link
                         to="/dashboard"
-                        className="flex items-center hover:bg-[#ef4343]/10 hover:text-[#ef4343] px-3 py-2 rounded-lg"
+                        className="flex items-center text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] px-3 py-2 rounded-lg"
                         onClick={() => setIsUserMenuOpen(false)}
                       >
                         <FaTachometerAlt className="mr-2" />
                         Dashboard
                       </Link>
                     </li>
-                    <div className="divider my-0"></div>
+                    <div className="relative my-2">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-b border-[#64748b]"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-[#64748b]"></span>
+                      </div>
+                    </div>
                     <li>
-                      <button
-                        onClick={handleLogout}
-                        className="flex items-center text-red-500 hover:bg-red-50 w-full px-3 py-2 rounded-lg text-left"
-                      >
-                        <FaSignOutAlt className="mr-2" />
-                        Log out
-                      </button>
+                      <div>
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white w-full px-3 py-2 rounded-lg text-left"
+                        >
+                          <FaSignOutAlt className="mr-2" />
+                          Log out
+                        </button>
+                      </div>
                     </li>
                   </motion.ul>
                 )}
@@ -281,9 +297,9 @@ const Navbar = () => {
                         handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 rounded-lg"
+                      className="flex items-center w-full px-4 py-3 text-sm font-medium border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white rounded-lg"
                     >
-                      <FaSignOutAlt className="mr-1" />
+                      <FaSignOutAlt className="mr-3" />
                       Log out
                     </button>
                   </>

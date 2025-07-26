@@ -15,13 +15,12 @@ import { AuthContext } from "../providers/AuthProvider";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const { login, googleSignIn } = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,7 +31,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(formData.email, formData.password);
+      await signIn(formData.email, formData.password);
       await Swal.fire({
         icon: "success",
         title: "Welcome back to BloodConnect",
@@ -52,7 +51,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async () => {
-    setGoogleLoading(true);
+    setLoading(true);
     try {
       await googleSignIn();
       await Swal.fire({
@@ -69,7 +68,7 @@ const Login = () => {
         text: error.message || "Something went wrong",
       });
     } finally {
-      setGoogleLoading(false);
+      setLoading(false);
     }
   };
 
@@ -211,10 +210,8 @@ const Login = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
               type="submit"
-              className={`w-full mt-6 cursor-pointer text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:ring-offset-2 transition-colors ${
-                loading
-                  ? "opacity-70 cursor-not-allowed"
-                  : "bg-[#ef4343] hover:bg-[#ef4343]/70"
+              className={`w-full mt-4 cursor-pointer bg-[#ef4343] hover:bg-[#d13838] text-white font-medium py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:ring-offset-2 transition-colors ${
+                loading ? "opacity-70 cursor-not-allowed" : ""
               }`}
               disabled={loading}
             >
@@ -245,14 +242,14 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0 }}
             onClick={handleGoogleLogin}
-            disabled={googleLoading}
+            disabled={loading}
             className={`w-full cursor-pointer flex items-center justify-center gap-2 py-2 px-4 rounded-md border border-[#ef4343] focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:ring-offset-2 transition-colors ${
-              googleLoading
+              loading
                 ? "opacity-70 cursor-not-allowed"
                 : "text-[#ef4343] hover:text-white hover:bg-[#ef4343]"
             }`}
           >
-            {googleLoading ? (
+            {loading ? (
               <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
             ) : (
               <>

@@ -253,7 +253,7 @@ const Login = () => {
             }`}
           >
             {googleLoading ? (
-              <span className="loading loading-spinner loading-sm"></span>
+              <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
             ) : (
               <>
                 <FaGoogle />

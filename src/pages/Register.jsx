@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import {
-  FaHeart,
+  FaRegHeart,
   FaUser,
   FaLock,
   FaEye,
@@ -197,7 +197,7 @@ const Register = () => {
               whileTap={{ scale: 0.95 }}
               className="p-3 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-full shadow-md"
             >
-              <FaHeart className="h-8 w-8 text-white" />
+              <FaRegHeart className="h-8 w-8 text-white" />
             </motion.div>
           </div>
           <h1 className="text-2xl font-bold text-[#ef4343]">Join as a Donor</h1>

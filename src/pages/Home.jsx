@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import {
   FaSearch,
-  FaHeart,
+  FaRegHeart,
   FaUsers,
   FaClock,
   FaArrowDown,
@@ -14,10 +14,30 @@ import {
   FaEnvelope,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Home = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const scrollToElement = () => {
+        const element = document.getElementById(location.state.scrollTo);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      };
+
+      // Small delay to ensure page is fully loaded
+      const timer = setTimeout(scrollToElement, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
   // Features data
   const features = [
     {
@@ -42,7 +62,7 @@ const Home = () => {
       color: "text-[#ef4343]",
     },
     {
-      icon: FaHeart,
+      icon: FaRegHeart,
       title: "Life Saving Impact",
       description:
         "Each donation can save up to 3 lives. Be a hero in someone's story.",
@@ -84,7 +104,7 @@ const Home = () => {
       step: "03",
       title: "Donate & Save Lives",
       description: "Visit the hospital and make your life-saving donation",
-      icon: FaHeart,
+      icon: FaRegHeart,
       bgColor: "bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]",
     },
   ];
@@ -217,7 +237,7 @@ const Home = () => {
                 to="/register"
                 className="btn btn-outline text-lg px-8 py-6 h-auto text-white border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
               >
-                <FaHeart className="mr-2" />
+                <FaRegHeart className="mr-2" />
                 Join as a Donor
               </Link>
               <Link
@@ -239,7 +259,7 @@ const Home = () => {
             >
               {[
                 { icon: FaUsers, value: "10,000+", label: "Active Donors" },
-                { icon: FaHeart, value: "25,000+", label: "Lives Saved" },
+                { icon: FaRegHeart, value: "25,000+", label: "Lives Saved" },
                 { icon: FaClock, value: "24/7", label: "Emergency Support" },
               ].map((stat, index) => (
                 <motion.div
@@ -285,7 +305,7 @@ const Home = () => {
       </motion.div>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
+      <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -329,7 +349,7 @@ const Home = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-gray-50">
+      <section id="how-it-works" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -397,7 +417,7 @@ const Home = () => {
                 to="/register"
                 className="btn btn-outline text-sm px-8 h-11 text-white border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
               >
-                <FaHeart className="mr-2" />
+                <FaRegHeart className="mr-2" />
                 Become a Donor
               </Link>
               <Link
@@ -413,7 +433,7 @@ const Home = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-white">
+      <section id="contact-us" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -421,7 +441,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#ef4343] mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-base-100 mb-4">
               Get in Touch
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">

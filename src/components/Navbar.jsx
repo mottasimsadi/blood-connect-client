@@ -2,7 +2,6 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import {
-  FaHeart,
   FaBars,
   FaTimes,
   FaUser,
@@ -11,6 +10,7 @@ import {
   FaHandHoldingMedical,
   FaBook,
   FaMoneyBillWave,
+  FaRegHeart,
 } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
@@ -99,7 +99,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <Link to="/" className="flex items-center space-x-2">
             <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md">
-              <FaHeart className="h-6 w-6 text-white" />
+              <FaRegHeart className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold text-[#ef4343]">
               BloodConnect
@@ -121,7 +121,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300">
-              <FaHeart className="h-6 w-6 text-white" />
+              <FaRegHeart className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold text-[#ef4343]">
               BloodConnect

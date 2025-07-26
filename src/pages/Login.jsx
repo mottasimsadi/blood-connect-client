@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router";
 import { motion } from "framer-motion";
 import {
-  FaHeart,
+  FaRegHeart,
   FaEnvelope,
   FaLock,
   FaEye,
@@ -107,7 +107,7 @@ const Login = () => {
             className="flex justify-center mb-4"
           >
             <div className="p-3 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-full shadow-md">
-              <FaHeart className="h-8 w-8 text-white" />
+              <FaRegHeart className="h-8 w-8 text-white" />
             </div>
           </motion.div>
           <motion.h1

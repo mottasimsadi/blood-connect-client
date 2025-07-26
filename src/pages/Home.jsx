@@ -308,6 +308,41 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 text-white">
+        <div className="max-w-7xl mx-auto p-8 sm:p-12 text-center rounded-2xl bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h3 className="text-2xl sm:text-3xl font-bold mb-4">
+              Ready to Save Lives?
+            </h3>
+            <p className="text-lg mb-8 max-w-2xl mx-auto">
+              Join thousands of donors who have already made a difference. Your
+              blood donation can be someone's second chance at life.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/register"
+                className="btn btn-outline text-sm px-8 h-11 text-white border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
+              >
+                <FaHeart className="mr-2" />
+                Become a Donor
+              </Link>
+              <Link
+                to="/donation-requests"
+                className="btn btn-outline text-sm px-8 h-11 text-white border-white/30 hover:bg-white/10 hover:border-white/50 backdrop-blur-sm transition-all duration-300"
+              >
+                <FaMapMarkerAlt className="mr-2" />
+                Find Blood Requests
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };

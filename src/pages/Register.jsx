@@ -34,7 +34,7 @@ const Register = () => {
     photoURL: "",
   });
 
-  const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
+  const { createUser, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -65,6 +65,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate password
     const passwordValidationError = validatePassword(formData.password);
     if (passwordValidationError) {
       setPasswordError(passwordValidationError);
@@ -72,6 +73,7 @@ const Register = () => {
       return;
     }
 
+    // Check password match
     if (formData.password !== formData.confirmPassword) {
       Swal.fire("Error", "Passwords do not match", "error");
       return;
@@ -80,21 +82,23 @@ const Register = () => {
     setLoading(true);
 
     try {
-      await createUser(formData.email, formData.password).then(() => {
-        return updateUser({
-          displayName: formData.name,
-          photoURL: formData.photoURL,
-        });
-      });
+      // Call the updated createUser function with separate arguments
+      await createUser(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.photoURL ||
+          "https://img.icons8.com/?size=100&id=H101gtpJBVoh&format=png&color=000000"
+      );
 
-      Swal.fire({
+      await Swal.fire({
         position: "center",
         icon: "success",
         title: `<span style="color: #ef4343">Welcome to BloodConnect!</span>`,
         html: `
-      <div class="flex flex-col items-center">
-        <p class="text-gray-600">Account created successfully</p>
-      </div>
+        <div class="flex flex-col items-center">
+          <p class="text-gray-600">Account created successfully</p>
+        </div>
       `,
         showConfirmButton: true,
         confirmButtonText: "Go to Dashboard",

@@ -22,17 +22,36 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
 
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  // Updated createUser function
+  const createUser = (email, password, name, photoURL) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        return updateProfile(userCredential.user, {
+          displayName: name,
+          photoURL: photoURL,
+        }).then(() => {
+          // Manually update the user to trigger onAuthStateChanged with the correct data
+          setUser({
+            ...userCredential.user,
+            displayName: name,
+            photoURL: photoURL,
+          });
+          return userCredential;
+        });
+      }
+    );
   };
 
   const signIn = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const googleProvider = new GoogleAuthProvider();
 
   const googleSignIn = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
@@ -53,25 +72,26 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("🚀 ~ unsubscribe ~ currentUser:", currentUser);
+      console.log("🚀 ~ onAuthStateChanged ~ currentUser:", currentUser);
 
       if (currentUser) {
-        axiosPublic
-          .post("/add-user", {
-            email: currentUser.email,
-            role: "donor",
-            loginCount: 1,
-          })
-          .then((res) => {
-            setUser(currentUser);
-            setLoading(false);
-            console.log(res.data);
-          });
+        // The user object now has the updated displayName
+        const userInfo = {
+          email: currentUser.email,
+          name: currentUser.displayName,
+          role: "donor",
+          loginCount: 1,
+        };
+        axiosPublic.post("/add-user", userInfo).then((res) => {
+          setUser(currentUser); // Ensure the user state is correctly set
+          setLoading(false);
+        });
       } else {
         setUser(null);
         setLoading(false);
@@ -80,7 +100,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [axiosPublic]);
 
   const authInfo = {
     user,

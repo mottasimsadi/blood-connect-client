@@ -1,11 +1,28 @@
-import React from 'react';
+import { Navigate } from "react-router";
+import useRole from "../hooks/useRole";
+import Loading from "./Loading";
+import AdminDashboard from "./AdminDashboard";
+import DonorDashboard from "./DonorDashboard";
+import VolunteerDashboard from "./VolunteerDashboard";
 
-const Dashboard = () => {
-    return (
-        <div className='text-base-100'>
-            Dashboard
-        </div>
-    );
-};
+export default function Dashboard() {
+  const { role, loading } = useRole();
 
-export default Dashboard;
+  if (loading) {
+    return <Loading></Loading>;
+  }
+
+  if (role === "donor") {
+    return <DonorDashboard />;
+  }
+
+  if (role === "volunteer") {
+    return <VolunteerDashboard />;
+  }
+
+  if (role === "admin") {
+    return <AdminDashboard />;
+  }
+
+  return <Navigate to={"/"} />;
+}

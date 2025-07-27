@@ -154,7 +154,7 @@ const Navbar = () => {
             {user ? (
               <div className="relative" ref={userMenuRef}>
                 <button
-                  className="btn btn-ghost btn-circle avatar hover:bg-[#ef4343]/10"
+                  className="btn btn-ghost btn-circle avatar ring-2 ring-[#ef4343] hover:bg-[#ef4343]/10"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   aria-label="User menu"
                 >

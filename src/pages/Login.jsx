@@ -31,12 +31,22 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await signIn(formData.email, formData.password);
+      const result = await signIn(formData.email, formData.password);
       await Swal.fire({
         icon: "success",
-        title: "Welcome back to BloodConnect",
+        title: `Welcome back, ${result.user.displayName || "User"}!`,
+        html: `
+          <div class="text-center">
+            <p>You've successfully logged in to BloodConnect</p>
+            <div class="mt-2 text-sm text-gray-500">
+              Redirecting you now...
+            </div>
+          </div>
+        `,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
+        background: "#ffffff",
+        backdrop: "rgba(0,0,0,0.1)",
       });
       navigate(from, { replace: true });
     } catch (error) {
@@ -44,6 +54,9 @@ const Login = () => {
         icon: "error",
         title: "Login Failed",
         text: error.message || "Invalid email or password",
+        background: "#ffffff",
+        backdrop: "rgba(0,0,0,0.1)",
+        confirmButtonColor: "#ef4343",
       });
     } finally {
       setLoading(false);
@@ -53,12 +66,22 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await googleSignIn();
+      const result = await googleSignIn();
       await Swal.fire({
         icon: "success",
-        title: "Google Login Successful",
+        title: `Welcome, ${result.user.displayName || "User"}!`,
+        html: `
+          <div class="text-center">
+            <p>Your Google login to BloodConnect was successful</p>
+            <div class="mt-2 text-sm text-gray-500">
+              Redirecting you now...
+            </div>
+          </div>
+        `,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
+        background: "#ffffff",
+        backdrop: "rgba(0,0,0,0.1)",
       });
       navigate(from, { replace: true });
     } catch (error) {
@@ -66,6 +89,9 @@ const Login = () => {
         icon: "error",
         title: "Google Login Failed",
         text: error.message || "Something went wrong",
+        background: "#ffffff",
+        backdrop: "rgba(0,0,0,0.1)",
+        confirmButtonColor: "#ef4343",
       });
     } finally {
       setLoading(false);

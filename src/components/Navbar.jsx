@@ -30,7 +30,6 @@ const Navbar = () => {
   const userMenuRef = useRef(null);
 
   useEffect(() => {
-    // Simulate auth state determination
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 100);
@@ -42,11 +41,16 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
       if (
         mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target)
+        !mobileMenuRef.current.contains(event.target) &&
+        !event.target.closest(".mobile-menu-item")
       ) {
         setIsMobileMenuOpen(false);
       }
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target) &&
+        !event.target.closest(".user-menu-item")
+      ) {
         setIsUserMenuOpen(false);
       }
     };
@@ -76,7 +80,6 @@ const Navbar = () => {
       });
   };
 
-  // Common links for all users
   const commonLinks = [
     {
       name: "Donation Requests",
@@ -86,7 +89,6 @@ const Navbar = () => {
     { name: "Blog", href: "/blog", icon: FaBook },
   ];
 
-  // Links only for logged in users
   const authLinks =
     !isLoading && user
       ? [{ name: "Funding", href: "/funding", icon: FaMoneyBillWave }]
@@ -195,8 +197,11 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/dashboard"
-                        className="flex items-center text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] px-3 py-2 rounded-lg"
-                        onClick={() => setIsUserMenuOpen(false)}
+                        className="flex items-center text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] px-3 py-2 rounded-lg user-menu-item"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsUserMenuOpen(false);
+                        }}
                       >
                         <FaTachometerAlt className="mr-2" />
                         Dashboard
@@ -213,8 +218,11 @@ const Navbar = () => {
                     <li>
                       <div>
                         <button
-                          onClick={handleLogout}
-                          className="flex items-center border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white w-full px-3 py-2 rounded-lg text-left"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLogout();
+                          }}
+                          className="flex items-center border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white w-full px-3 py-2 rounded-lg text-left user-menu-item"
                         >
                           <FaSignOutAlt className="mr-2" />
                           Log out
@@ -280,12 +288,15 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg mx-2 ${
+                  className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg mx-2 mobile-menu-item ${
                     isActive(item.href)
                       ? "bg-[#ef4343] text-white"
                       : "text-[#64748b] hover:bg-[#ef4343] hover:text-white"
                   }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMobileMenuOpen(false);
+                  }}
                 >
                   <item.icon className="mr-3" />
                   {item.name}
@@ -297,18 +308,22 @@ const Navbar = () => {
                   <>
                     <Link
                       to="/dashboard"
-                      className="flex items-center px-4 py-3 text-sm font-medium text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] rounded-lg"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center px-4 py-3 text-sm font-medium text-[#64748b] hover:bg-[#ef4343]/10 hover:text-[#ef4343] rounded-lg mobile-menu-item"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMobileMenuOpen(false);
+                      }}
                     >
                       <FaTachometerAlt className="mr-3" />
                       Dashboard
                     </Link>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleLogout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center w-full px-4 py-3 text-sm font-medium border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white rounded-lg"
+                      className="flex items-center w-full px-4 py-3 text-sm font-medium border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white rounded-lg mobile-menu-item"
                     >
                       <FaSignOutAlt className="mr-3" />
                       Log out
@@ -318,16 +333,22 @@ const Navbar = () => {
                   <>
                     <Link
                       to="/login"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="btn bg-transparent shadow-none text-[#ef4343] border-[#ef4343] w-full justify-center mb-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="btn bg-transparent shadow-none text-[#ef4343] border-[#ef4343] w-full justify-center mb-2 mobile-menu-item"
                     >
                       <FaUser className="mr-1" />
                       Login
                     </Link>
                     <Link
                       to="/register"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="btn bg-[#ef4343] border-none hover:opacity-70 w-full"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="btn bg-[#ef4343] border-none hover:opacity-70 w-full mobile-menu-item"
                     >
                       Join as Donor
                     </Link>

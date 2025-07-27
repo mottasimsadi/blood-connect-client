@@ -11,18 +11,82 @@ const AdminDashboard = () => {
     axiosSecure.get("/get-users").then(({ data }) => setUsers(data));
   };
 
-  const handleRoleChange = (e, email) => {
-    const role = e.target.value;
-    axiosSecure.patch("/update-role", { role, email }).then(({ data }) => {
-      if (data.modifiedCount) {
-        Swal.fire({
-          title: "Success!",
-          text: "User role updated successfully.",
-          icon: "success",
-          confirmButtonColor: "#ef4343",
-        }).then(() => {
-          fetchUsers(); // Refresh the user list
-        });
+  const handleRoleChange = (e, email, currentRole) => {
+    const newRole = e.target.value;
+
+    // Function to get role color class
+    const getRoleColor = (role) => {
+      switch (role) {
+        case "admin":
+          return "text-purple-600 font-bold";
+        case "volunteer":
+          return "text-blue-600 font-bold";
+        case "donor":
+          return "text-green-600 font-bold";
+      }
+    };
+
+    Swal.fire({
+      title: "Confirm Role Change",
+      html: `
+      <div class="text-center">
+        <p>Are you sure you want to change this user's role from 
+          <span class="${getRoleColor(currentRole)}">${currentRole}</span> 
+          to 
+          <span class="${getRoleColor(newRole)}">${newRole}</span>?
+        </p>
+      </div>
+    `,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4343",
+      cancelButtonColor: "#64748b",
+      confirmButtonText: "Yes, update role",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch("/update-role", { role: newRole, email })
+          .then(({ data }) => {
+            if (data.modifiedCount) {
+              Swal.fire({
+                title: "Role Updated!",
+                html: `
+              <div class="text-center">
+                <div class="text-green-500 text-5xl mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p class="text-lg font-semibold">User role changed successfully!</p>
+                <div class="mt-4 space-y-1">
+                  <p><span class="font-medium">Previous Role:</span> 
+                    <span class="${getRoleColor(
+                      currentRole
+                    )}">${currentRole}</span>
+                  </p>
+                  <p><span class="font-medium">New Role:</span> 
+                    <span class="${getRoleColor(newRole)}">${newRole}</span>
+                  </p>
+                </div>
+              </div>
+            `,
+                confirmButtonColor: "#ef4343",
+              }).then(() => {
+                fetchUsers();
+              });
+            }
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Error!",
+              text: error.response?.data?.message || "Failed to update role",
+              icon: "error",
+              confirmButtonColor: "#ef4343",
+            });
+          });
+      } else {
+        e.target.value = currentRole;
       }
     });
   };
@@ -92,7 +156,9 @@ const AdminDashboard = () => {
                   id="role-select"
                   name="role"
                   value={user.role || "donor"}
-                  onChange={(e) => handleRoleChange(e, user.email)}
+                  onChange={(e) =>
+                    handleRoleChange(e, user.email, user.role || "donor")
+                  }
                   className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-[#ef4343] sm:text-sm rounded-md"
                 >
                   <option value="admin">Admin</option>

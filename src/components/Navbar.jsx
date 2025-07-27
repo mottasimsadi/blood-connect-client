@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
+import useRole from "../hooks/useRole";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,6 +23,8 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logOut } = useContext(AuthContext);
+
+  const { role, loading: roleLoading } = useRole();
 
   const mobileMenuRef = useRef(null);
   const userMenuRef = useRef(null);
@@ -178,7 +181,7 @@ const Navbar = () => {
                         {user?.displayName || "User"}
                       </p>
                       <p className="text-xs text-[#64748b] capitalize">
-                        {user?.role || "Donor"}
+                        {!roleLoading ? role : "Loading..."}
                       </p>
                     </li>
                     <div className="relative my-2">
@@ -225,13 +228,21 @@ const Navbar = () => {
               <div className="flex items-center space-x-3">
                 <Link
                   to="/login"
-                  className="btn bg-transparent border-none shadow-none text-[#64748b] hover:text-white hover:bg-[#ef4343]"
+                  className={`btn bg-transparent shadow-none text-[#64748b] hover:text-white hover:bg-[#ef4343] ${
+                    isActive("/login")
+                      ? "text-[#ef4343] border-[#ef4343]"
+                      : "text-[#64748b] border-none"
+                  }`}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="btn bg-[#ef4343] border-none hover:opacity-70 text-white"
+                  className={`btn bg-[#ef4343] hover:opacity-70 ${
+                    isActive("/register")
+                      ? " text-[#ef4343] bg-transparent shadow-none border-[#ef4343]"
+                      : "text-white border-none"
+                  }`}
                 >
                   Join as Donor
                 </Link>

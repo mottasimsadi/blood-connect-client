@@ -127,11 +127,31 @@ const Profile = () => {
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-      ...(name === "district" && { upazila: "" }),
-    }));
+
+    if (name === "district") {
+      // Check if selected district has upazilas
+      if (value && (!upazilas[value] || upazilas[value].length === 0)) {
+        Swal.fire({
+          icon: "info",
+          title: "No Upazilas Found",
+          text: `No upazilas are currently listed for ${value} district. Please contact support if this is incorrect.`,
+          confirmButtonColor: "#ef4343",
+          background: "#ffffff",
+          color: "#333333",
+        });
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        district: value,
+        upazila: "", // Reset upazila when district changes
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   if (authLoading || roleLoading || !userProfile || !formData) {
@@ -320,7 +340,11 @@ const Profile = () => {
                     name="upazila"
                     value={formData.upazila}
                     onChange={handleSelectChange}
-                    disabled={!isEditing || !formData.district}
+                    disabled={
+                      !isEditing ||
+                      !formData.district ||
+                      !upazilas[formData.district]?.length
+                    }
                     className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
                   >
                     <option value="">Select upazila</option>

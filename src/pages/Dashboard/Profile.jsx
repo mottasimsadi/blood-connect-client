@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { AuthContext } from "../providers/AuthProvider";
-import { districts, upazilas, bloodGroups } from "../data/bangladeshData";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import useRole from "../hooks/useRole";
+import { AuthContext } from "../../providers/AuthProvider";
+import { districts, upazilas, bloodGroups } from "../../data/bangladeshData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useRole from "../../hooks/useRole";
 import {
   FaUserEdit,
   FaSave,

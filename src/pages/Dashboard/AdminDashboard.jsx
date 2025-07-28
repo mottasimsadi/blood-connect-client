@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { FaEnvelope, FaUser, FaUserCog, FaUserShield } from "react-icons/fa";
 import Swal from "sweetalert2";
 

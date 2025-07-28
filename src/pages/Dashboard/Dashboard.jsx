@@ -1,9 +1,9 @@
 import { Navigate } from "react-router";
-import useRole from "../hooks/useRole";
-import Loading from "./Loading";
+import useRole from "../../hooks/useRole";
+import Loading from "../Loading";
 import AdminDashboard from "./AdminDashboard";
-import DonorDashboard from "./DonorDashboard";
 import VolunteerDashboard from "./VolunteerDashboard";
+import DonorDashboard from "./DonorDashboard";
 
 export default function Dashboard() {
   const { role, loading } = useRole();

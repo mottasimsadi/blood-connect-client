@@ -4,10 +4,10 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorPage from "../pages/ErrorPage";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import PrivateRoute from "../Routers/PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Profile from "../pages/Profile";
+import Profile from "../pages/Dashboard/Profile";
 
 const router = createBrowserRouter([
   {

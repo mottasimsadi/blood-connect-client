@@ -87,14 +87,32 @@ const CreateDonationRequest = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+const handleChange = (e) => {
+  const { name, value } = e.target;
+
+  // Handle district selection with upazila validation
+  if (name === "recipientDistrict") {
+    if (value && (!upazilas[value] || upazilas[value].length === 0)) {
+      Swal.fire({
+        icon: "info",
+        title: "No Upazilas Found",
+        text: `No upazilas are currently listed for ${value} district. Please contact support if this is incorrect.`,
+        confirmButtonColor: "#ef4343",
+      });
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      recipientDistrict: value,
+      recipientUpazila: "",
+    }));
+  } else {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "recipientDistrict" && { recipientUpazila: "" }),
     }));
-  };
+  }
+};
 
   if (profileLoading) {
     return (

@@ -190,14 +190,19 @@ const Profile = () => {
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-none"
+              className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-[#ef4343]"
             >
               {isSaving ? (
                 <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
               ) : (
                 <FaSave />
               )}
-              &nbsp;{isSaving ? "Saving..." : "Save"}
+              &nbsp;
+              {isSaving ? (
+                <span className="text-[#ef4343]">Saving...</span>
+              ) : (
+                "Save"
+              )}
             </button>
           </div>
         )}

@@ -30,7 +30,6 @@ const DonorDashboard = () => {
       );
       return data;
     },
-    // Only run this query if the user is logged in
     enabled: !!user?.email,
   });
 
@@ -41,7 +40,6 @@ const DonorDashboard = () => {
     },
     onSuccess: () => {
       Swal.fire("Updated!", "The donation status has been updated.", "success");
-      // Re-fetch the data to show the change immediately
       queryClient.invalidateQueries({
         queryKey: ["my-recent-requests", user?.email],
       });
@@ -79,12 +77,10 @@ const DonorDashboard = () => {
     },
   });
 
-  // Handler for the status change buttons
   const handleStatusChange = (id, newStatus) => {
     updateStatus({ id, status: newStatus });
   };
 
-  // Handler for the delete button, which shows a confirmation modal first
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -101,7 +97,6 @@ const DonorDashboard = () => {
     });
   };
 
-  // Helper to get badge color based on status
   const getStatusBadge = (status) => {
     switch (status) {
       case "pending":

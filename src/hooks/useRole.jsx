@@ -7,7 +7,6 @@ export default function useRole() {
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
-    // Only fetch role if we have an axiosSecure instance
     axiosSecure("/get-user-role")
       .then((res) => {
         setRole(res.data.role);

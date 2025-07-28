@@ -81,22 +81,31 @@ const AuthProvider = ({ children }) => {
       console.log("🚀 ~ onAuthStateChanged ~ currentUser:", currentUser);
 
       if (currentUser) {
-        // The user object now has the updated displayName
         const userInfo = {
           email: currentUser.email,
           name: currentUser.displayName,
           role: "donor",
-          loginCount: 1,
         };
-        axiosPublic.post("/add-user", userInfo).then((res) => {
-          setUser(currentUser); // Ensure the user state is correctly set
-          setLoading(false);
-        });
+
+        axiosPublic
+          .post("/add-user", userInfo)
+          .then((res) => {
+            console.log("User synced with backend:", res.data);
+            setUser(currentUser);
+          })
+          .catch((error) => {
+            console.error("Failed to sync user with backend:", error);
+            setUser(currentUser);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       } else {
         setUser(null);
         setLoading(false);
       }
     });
+
     return () => {
       unsubscribe();
     };

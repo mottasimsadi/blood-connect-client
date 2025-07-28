@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 import { districts, upazilas, bloodGroups } from "../data/bangladeshData";
 import { AuthContext } from "../providers/AuthProvider";
+import useAxiosPublic from "../hooks/axiosPublic";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +36,7 @@ const Register = () => {
   });
 
   const { createUser, googleSignIn } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -82,8 +84,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      // Call the updated createUser function with separate arguments
-      await createUser(
+      const result = await createUser(
         formData.email,
         formData.password,
         formData.name,
@@ -91,32 +92,50 @@ const Register = () => {
           "https://img.icons8.com/?size=100&id=H101gtpJBVoh&format=png&color=000000"
       );
 
-      await Swal.fire({
-        position: "center",
-        icon: "success",
-        title: `<span style="color: #ef4343">Welcome to BloodConnect!</span>`,
-        html: `
-        <div class="flex flex-col items-center">
-          <p class="text-gray-600">Account created successfully</p>
-        </div>
-      `,
-        showConfirmButton: true,
-        confirmButtonText: "Go to Dashboard",
-        confirmButtonColor: "#ef4343",
-        timer: 3000,
-        timerProgressBar: true,
-        backdrop: "rgba(0,0,0,0.05)",
-        customClass: {
-          popup: "rounded-lg shadow-lg",
-          confirmButton: "px-4 py-2 rounded-md font-medium",
-        },
-      }).then(() => {
+      // Create the complete user profile object for the MongoDB database.
+      const userInfo = {
+        name: formData.name,
+        email: formData.email,
+        photoURL: result.user.photoURL,
+        role: "donor",
+        status: "active",
+        bloodGroup: formData.bloodGroup,
+        district: formData.district,
+        upazila: formData.upazila,
+      };
+
+      // Send the complete user object to the backend to be saved in MongoDB.
+      const { data: serverResponse } = await axiosPublic.post(
+        "/add-user",
+        userInfo
+      );
+
+      if (
+        serverResponse.result?.insertedId ||
+        serverResponse.msg === "User updated"
+      ) {
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `<span style="color: #ef4343">Welcome to BloodConnect!</span>`,
+          text: "Your account was created successfully.",
+          showConfirmButton: true,
+          confirmButtonText: "Go to Dashboard",
+          confirmButtonColor: "#ef4343",
+          timer: 3000,
+        });
         navigate("/dashboard");
-      });
+      } else {
+        throw new Error("Failed to save user data to the database.");
+      }
     } catch (error) {
+      console.error("Registration error:", error);
       Swal.fire({
         title: "Registration Failed",
-        text: error.message || "Failed to create account",
+        text:
+          error.response?.data?.msg ||
+          error.message ||
+          "Failed to create account.",
         icon: "error",
         confirmButtonColor: "#ef4343",
       });
@@ -128,23 +147,28 @@ const Register = () => {
   const handleGoogleLogin = () => {
     setLoading(true);
     googleSignIn()
+      .then((result) => {
+        // Create user info for backend
+        const userInfo = {
+          email: result.user.email,
+          name: result.user.displayName,
+          role: "donor",
+          status: "active",
+          photoURL: result.user.photoURL,
+        };
+        // Save/update user in DB
+        return axiosPublic.post("/add-user", userInfo);
+      })
       .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: "Google Login Successful",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        Swal.fire("Success!", "Logged in successfully!", "success");
         navigate("/dashboard");
       })
       .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Google Login Failed",
-          text: error.message || "Something went wrong",
-        });
+        Swal.fire("Login Failed", error.message, "error");
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleChange = (e) => {

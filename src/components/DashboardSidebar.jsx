@@ -101,7 +101,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
         ...baseItems,
         { name: "All Users", href: "/dashboard/all-users", icon: FaUsers },
         {
-          name: "All Requests",
+          name: "All Blood Donation Requests",
           href: "/dashboard/all-blood-donation-request",
           icon: FaTint,
         },
@@ -170,7 +170,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex items-center space-x-2 px-2 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive
                       ? "bg-[#ef4343] text-white"
                       : "text-gray-600 hover:text-[#ef4343] hover:bg-[#ef4343]/10"

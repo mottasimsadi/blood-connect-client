@@ -24,7 +24,7 @@ const DonationRequests = () => {
   });
 
   const handleViewDetails = (id) => {
-    navigate(`/dashboard/donation-request/${id}`);
+    navigate(`/donation-request/${id}`);
   };
 
   const formatTime = (timeString) => {

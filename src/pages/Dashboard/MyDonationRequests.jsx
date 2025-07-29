@@ -228,7 +228,7 @@ const MyDonationRequests = () => {
                               onClick={() =>
                                 handleStatusChange(request._id, "done")
                               }
-                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
                             >
                               <FaCheckCircle /> Done
                             </button>
@@ -236,7 +236,7 @@ const MyDonationRequests = () => {
                               onClick={() =>
                                 handleStatusChange(request._id, "canceled")
                               }
-                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
                             >
                               <FaTimesCircle /> Cancel
                             </button>
@@ -249,7 +249,7 @@ const MyDonationRequests = () => {
                               `/dashboard/donation-request/${request._id}`
                             )
                           }
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
                         >
                           <FaEye />
                         </button>
@@ -259,13 +259,13 @@ const MyDonationRequests = () => {
                               `/dashboard/edit-donation-request/${request._id}`
                             )
                           }
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(request._id)}
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
                         >
                           <FaTrashAlt />
                         </button>

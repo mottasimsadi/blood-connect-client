@@ -1,5 +1,3 @@
-// src/pages/Dashboard.jsx
-
 import { useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
@@ -31,7 +29,7 @@ const DonorDashboard = () => {
       return data;
     },
     enabled: !!user?.email,
-    refetchOnMount: "always"
+    refetchOnMount: "always",
   });
 
   // 2. Mutation for updating the status of a donation request
@@ -113,14 +111,14 @@ const DonorDashboard = () => {
     }
   };
 
-    const formatTime = (timeString) => {
-      if (!timeString) return "";
-      const [hours, minutes] = timeString.split(":");
-      const hoursInt = parseInt(hours, 10);
-      const suffix = hoursInt >= 12 ? "PM" : "AM";
-      const formattedHours = ((hoursInt + 11) % 12) + 1; // Converts 24h to 12h format
-      return `${formattedHours}:${minutes} ${suffix}`;
-    };
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const [hours, minutes] = timeString.split(":");
+    const hoursInt = parseInt(hours, 10);
+    const suffix = hoursInt >= 12 ? "PM" : "AM";
+    const formattedHours = ((hoursInt + 11) % 12) + 1; // Converts 24h to 12h format
+    return `${formattedHours}:${minutes} ${suffix}`;
+  };
 
   if (isLoading) {
     return (

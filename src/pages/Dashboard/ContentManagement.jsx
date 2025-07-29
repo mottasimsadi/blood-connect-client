@@ -194,8 +194,9 @@ const ContentManagement = () => {
                         {blog.status}
                       </span>
                       <h2 className="card-title">{blog.title}</h2>
-                      {role === "admin" && (
+                      {role === "admin" || role === "volunteer" ? (
                         <div className="card-actions justify-end mt-2">
+                          {/* Edit button (visible to both admin and volunteer) */}
                           <button
                             onClick={() =>
                               navigate(
@@ -206,31 +207,39 @@ const ContentManagement = () => {
                           >
                             <FaEdit className="mr-1" /> Edit
                           </button>
-                          {blog.status === "draft" ? (
-                            <button
-                              onClick={() =>
-                                handleStatusChange(blog, "published")
-                              }
-                              className="btn btn-success btn-sm text-white"
-                            >
-                              <FaUpload className="mr-1" /> Publish
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => handleStatusChange(blog, "draft")}
-                              className="btn btn-warning btn-sm text-white"
-                            >
-                              <FaEyeSlash className="mr-1" /> Unpublish
-                            </button>
+
+                          {/* Publish/Unpublish and Delete (admin only) */}
+                          {role === "admin" && (
+                            <>
+                              {blog.status === "draft" ? (
+                                <button
+                                  onClick={() =>
+                                    handleStatusChange(blog, "published")
+                                  }
+                                  className="btn btn-success btn-sm text-white"
+                                >
+                                  <FaUpload className="mr-1" /> Publish
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() =>
+                                    handleStatusChange(blog, "draft")
+                                  }
+                                  className="btn btn-warning btn-sm text-white"
+                                >
+                                  <FaEyeSlash className="mr-1" /> Unpublish
+                                </button>
+                              )}
+                              <button
+                                onClick={() => handleDelete(blog)}
+                                className="btn btn-error btn-sm text-white"
+                              >
+                                <FaTrashAlt className="mr-1" /> Delete
+                              </button>
+                            </>
                           )}
-                          <button
-                            onClick={() => handleDelete(blog)}
-                            className="btn btn-error btn-sm text-white"
-                          >
-                            <FaTrashAlt className="mr-1" /> Delete
-                          </button>
                         </div>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 ))}

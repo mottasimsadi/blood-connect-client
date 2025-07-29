@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Loading from "../../pages/Loading"; 
+import Loading from "../../pages/Loading";
 import { FaImage, FaPencilAlt, FaSave, FaTimes } from "react-icons/fa";
 
 const EditBlog = () => {
@@ -27,6 +27,7 @@ const EditBlog = () => {
       return data;
     },
     enabled: !!id,
+    refetchOnMount: "always",
   });
 
   // 2. Populate the form state once the blog data is fetched

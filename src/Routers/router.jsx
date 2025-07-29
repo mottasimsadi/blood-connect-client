@@ -20,6 +20,8 @@ import DonationRequestDetails from "../pages/DonationRequestDetails";
 import Blog from "../pages/Blog";
 import BlogDetails from "../pages/BlogDetails";
 import EditBlog from "../pages/Dashboard/EditBlog";
+import AdminRoute from "./AdminRole";
+import AdminOrVolunteerRoute from "./AdminOrVolunteerRoute";
 
 const router = createBrowserRouter([
   {
@@ -92,23 +94,43 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/all-users",
-        Component: AllUsers,
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/all-blood-donation-request",
-        Component: AllBloodDonationRequest,
+        element: (
+          <AdminOrVolunteerRoute>
+            <AllBloodDonationRequest></AllBloodDonationRequest>
+          </AdminOrVolunteerRoute>
+        ),
       },
       {
         path: "/dashboard/content-management",
-        Component: ContentManagement,
+        element: (
+          <AdminOrVolunteerRoute>
+            <ContentManagement></ContentManagement>
+          </AdminOrVolunteerRoute>
+        ),
       },
       {
         path: "/dashboard/content-management/add-blog",
-        Component: AddBlog,
+        element: (
+          <AdminOrVolunteerRoute>
+            <AddBlog></AddBlog>
+          </AdminOrVolunteerRoute>
+        ),
       },
       {
         path: "content-management/edit-blog/:id",
-        Component: EditBlog,
+        element: (
+          <AdminOrVolunteerRoute>
+            <EditBlog></EditBlog>
+          </AdminOrVolunteerRoute>
+        ),
       },
     ],
   },

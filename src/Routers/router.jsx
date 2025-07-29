@@ -19,6 +19,7 @@ import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../pages/DonationRequestDetails";
 import Blog from "../pages/Blog";
 import BlogDetails from "../pages/BlogDetails";
+import EditBlog from "../pages/Dashboard/EditBlog";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/content-management/add-blog",
         Component: AddBlog,
+      },
+      {
+        path: "content-management/edit-blog/:id",
+        Component: EditBlog,
       },
     ],
   },

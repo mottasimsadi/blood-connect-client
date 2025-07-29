@@ -1,12 +1,14 @@
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { FaImage, FaPencilAlt, FaPlus, FaTimes } from "react-icons/fa";
-import { useQueryClient } from "@tanstack/react-query";
+import Loading from "../../pages/Loading"; 
+import { FaImage, FaPencilAlt, FaSave, FaTimes } from "react-icons/fa";
 
-const AddBlog = () => {
+const EditBlog = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
@@ -17,61 +19,72 @@ const AddBlog = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // 1. Fetch the existing blog data
+  const { data: blog, isLoading } = useQuery({
+    queryKey: ["blog-details", id],
+    queryFn: async () => {
+      const { data } = await axiosSecure.get(`/blogs/${id}`);
+      return data;
+    },
+    enabled: !!id,
+  });
 
-    if (!title.trim() || !photoURL.trim() || !content.trim()) {
+  // 2. Populate the form state once the blog data is fetched
+  useEffect(() => {
+    if (blog) {
+      setTitle(blog.title);
+      setPhotoURL(blog.thumbnail);
+      setContent(blog.content);
+    }
+  }, [blog]);
+
+  // 3. Mutation for updating the blog
+  const { mutate: updateBlog } = useMutation({
+    mutationFn: (updatedBlog) => axiosSecure.patch(`/blogs/${id}`, updatedBlog),
+    onSuccess: () => {
       Swal.fire({
-        title: "Incomplete Form",
-        text: "Please fill out the title, thumbnail URL, and content.",
-        icon: "warning",
+        title: "Updated!",
+        text: "The blog post has been successfully updated.",
+        icon: "success",
         confirmButtonColor: "#ef4343",
       });
-      return;
-    }
+      queryClient.invalidateQueries({ queryKey: ["all-blogs"] });
+      navigate("/dashboard/content-management");
+    },
+    onError: (err) =>
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonColor: "#ef4343",
+      }),
+  });
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setIsSubmitting(true);
-
-    const newBlog = {
+    const updatedBlogData = {
       title,
       thumbnail: photoURL,
       content,
     };
-
-    try {
-      await axiosSecure.post("/blogs", newBlog);
-      await queryClient.invalidateQueries({ queryKey: ["all-blogs"] });
-
-      Swal.fire({
-        title: "Success!",
-        text: "Your blog post has been created as a draft.",
-        icon: "success",
-        confirmButtonColor: "#ef4343",
-      });
-      navigate("/dashboard/content-management");
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: error.message || "Could not create the blog post.",
-        icon: "error",
-        confirmButtonColor: "#ef4343",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    updateBlog(updatedBlogData);
+    setIsSubmitting(false);
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="space-y-6 p-4">
       <h2 className="text-2xl font-bold text-center text-[#ef4343] mb-6">
-        Add New Blog Post
+        Edit Blog Post
       </h2>
       <div className="card bg-white shadow-xl max-w-4xl mx-auto border border-gray-200">
         <div className="card-body">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-gray-700 mb-2">
+                <span className="label-text text-base-100 mb-2">
                   Blog Title*
                 </span>
               </label>
@@ -80,8 +93,7 @@ const AddBlog = () => {
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="input input-bordered w-input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
-                  placeholder="Enter the blog title"
+                  className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
                   required
                 />
                 <FaPencilAlt className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
@@ -89,7 +101,7 @@ const AddBlog = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-gray-700 mb-2">
+                <span className="label-text text-base-100 mb-2">
                   Thumbnail Image URL*
                 </span>
               </label>
@@ -98,8 +110,7 @@ const AddBlog = () => {
                   type="url"
                   value={photoURL}
                   onChange={(e) => setPhotoURL(e.target.value)}
-                  className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
-                  placeholder="https://example.com/image.jpg"
+                  className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
                   required
                 />
                 <FaImage className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
@@ -107,20 +118,19 @@ const AddBlog = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-gray-700 mb-2">
-                  Blog Content*
-                </span>
+                <span className="label-text text-base-100">Blog Content*</span>
               </label>
-              {/* Jodit Rich Text Editor */}
-              <JoditEditor
-                ref={editor}
-                value={content}
-                className="text-base-100"
-                required
-                tabIndex={1}
-                onBlur={(newContent) => setContent(newContent)}
-                onChange={() => {}}
-              />
+              {content && (
+                <JoditEditor
+                  key={content}
+                  ref={editor}
+                  value={content}
+                  className="text-base-100"
+                  tabIndex={1}
+                  onBlur={(newContent) => setContent(newContent)}
+                  onChange={() => {}}
+                />
+              )}
             </div>
             <div className="card-actions justify-end gap-2 pt-4">
               <button
@@ -130,22 +140,17 @@ const AddBlog = () => {
               >
                 <FaTimes /> Cancel
               </button>
-
               <button
                 type="submit"
                 className="btn bg-[#ef4343] text-white border-none hover:bg-[#d13838]"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
-                  <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
+                  <span className="loading loading-spinner"></span>
                 ) : (
-                  <FaPlus />
+                  <FaSave />
                 )}
-                {isSubmitting ? (
-                  <span className="text-[#ef4343]">Creating...</span>
-                ) : (
-                  "Create Blog"
-                )}
+                {isSubmitting ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>
@@ -155,4 +160,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default EditBlog;

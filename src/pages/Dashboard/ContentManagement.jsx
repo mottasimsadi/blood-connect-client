@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useRole from "../../hooks/useRole";
@@ -10,6 +10,7 @@ import {
   FaTrashAlt,
   FaUpload,
   FaEyeSlash,
+  FaEdit,
 } from "react-icons/fa";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -19,6 +20,7 @@ const ContentManagement = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
   const { role, loading: roleLoading } = useRole();
+  const navigate = useNavigate();
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +33,7 @@ const ContentManagement = () => {
       return data;
     },
     enabled: role === "admin" || role === "volunteer",
+    refetchOnMount: "always",
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -173,7 +176,7 @@ const ContentManagement = () => {
                 {paginatedBlogs.map((blog) => (
                   <div
                     key={blog._id}
-                    className="card card-compact bg-base-100 shadow-xl border transition-shadow hover:shadow-2xl"
+                    className="card card-compact bg-white text-base-100 border-gray-300 shadow-xl border transition-shadow hover:shadow-2xl"
                   >
                     <figure>
                       <img
@@ -193,6 +196,16 @@ const ContentManagement = () => {
                       <h2 className="card-title">{blog.title}</h2>
                       {role === "admin" && (
                         <div className="card-actions justify-end mt-2">
+                          <button
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/content-management/edit-blog/${blog._id}`
+                              )
+                            }
+                            className="btn btn-info btn-sm text-white"
+                          >
+                            <FaEdit className="mr-1" /> Edit
+                          </button>
                           {blog.status === "draft" ? (
                             <button
                               onClick={() =>
@@ -233,17 +246,17 @@ const ContentManagement = () => {
                   <div className="join">
                     <button
                       onClick={() => setCurrentPage((p) => p - 1)}
-                      className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white"
+                      className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none mr-2"
                       disabled={currentPage === 1}
                     >
                       <MdNavigateBefore className="text-xl" />
                     </button>
-                    <button className="join-item btn btn-sm pointer-events-none">
-                      {currentPage} / {totalPages}
+                    <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                      Page {currentPage} / {totalPages}
                     </button>
                     <button
                       onClick={() => setCurrentPage((p) => p + 1)}
-                      className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white"
+                      className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none"
                       disabled={currentPage === totalPages}
                     >
                       <MdNavigateNext className="text-xl" />

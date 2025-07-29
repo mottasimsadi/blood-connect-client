@@ -107,7 +107,7 @@ const AllBloodDonationRequest = () => {
   );
 
   if (isLoading || roleLoading) {
-    return <Loading></Loading>
+    return <Loading></Loading>;
   }
 
   return (
@@ -148,8 +148,8 @@ const AllBloodDonationRequest = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="table w-full">
-              <thead>
+            <table className="table w-full text-base-100">
+              <thead className="text-base-100">
                 <tr>
                   <th>Recipient</th>
                   <th>Location</th>
@@ -203,7 +203,7 @@ const AllBloodDonationRequest = () => {
                         onClick={() =>
                           navigate(`/dashboard/donation-request/${request._id}`)
                         }
-                        className="btn btn-ghost btn-xs"
+                        className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         title="View"
                       >
                         <FaEye />
@@ -242,14 +242,14 @@ const AllBloodDonationRequest = () => {
                                 `/dashboard/edit-donation-request/${request._id}`
                               )
                             }
-                            className="btn btn-ghost btn-xs"
+                            className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             title="Edit"
                           >
                             <FaEdit />
                           </button>
                           <button
                             onClick={() => handleDelete(request._id)}
-                            className="btn btn-ghost btn-xs text-red-500"
+                            className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             title="Delete"
                           >
                             <FaTrashAlt />
@@ -295,7 +295,7 @@ const AllBloodDonationRequest = () => {
                   <MdNavigateBefore className="text-xl" />
                 </button>
                 <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
-                  Page {currentPage}
+                  Page {currentPage} / {totalPages}
                 </button>
                 <button
                   onClick={() => setCurrentPage((p) => p + 1)}

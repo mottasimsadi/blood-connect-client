@@ -220,7 +220,7 @@ const MyDonationRequests = () => {
                           "No donor yet"
                         )}
                       </td>
-                      <td className="space-x-1">
+                      <td className="text-center lg:space-x-1">
                         {/* Conditional "Done" and "Cancel" buttons */}
                         {request.status === "inprogress" && (
                           <>
@@ -228,17 +228,19 @@ const MyDonationRequests = () => {
                               onClick={() =>
                                 handleStatusChange(request._id, "done")
                               }
-                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
+                              className="btn btn-success btn-xs text-white mb-1"
+                              title="Mark as Done"
                             >
-                              <FaCheckCircle /> Done
+                              <FaCheckCircle />
                             </button>
                             <button
                               onClick={() =>
                                 handleStatusChange(request._id, "canceled")
                               }
-                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
+                              className="btn btn-error btn-xs text-white mb-1"
+                              title="Cancel Request"
                             >
-                              <FaTimesCircle /> Cancel
+                              <FaTimesCircle />
                             </button>
                           </>
                         )}
@@ -249,7 +251,7 @@ const MyDonationRequests = () => {
                               `/dashboard/donation-request/${request._id}`
                             )
                           }
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] mb-1"
                         >
                           <FaEye />
                         </button>
@@ -259,13 +261,13 @@ const MyDonationRequests = () => {
                               `/dashboard/edit-donation-request/${request._id}`
                             )
                           }
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] mb-1"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(request._id)}
-                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343] m-1"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaTrashAlt />
                         </button>

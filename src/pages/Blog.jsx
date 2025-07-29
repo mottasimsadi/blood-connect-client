@@ -14,6 +14,7 @@ const Blog = () => {
       const { data } = await axiosPublic.get("/blogs/published");
       return data;
     },
+    refetchOnMount: "always",
   });
 
   return (
@@ -31,7 +32,7 @@ const Blog = () => {
         ) : blogs.length === 0 ? (
           <div className="card bg-white shadow-xl border border-gray-200 text-center py-12">
             <div className="card-body items-center">
-                <FaFeatherAlt className="text-6xl text-[#ef4343] opacity-50 mb-4" />
+              <FaFeatherAlt className="text-6xl text-[#ef4343] opacity-50 mb-4" />
               <h3 className="text-2xl font-semibold text-gray-700">
                 No Published Blogs Yet
               </h3>

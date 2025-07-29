@@ -18,6 +18,7 @@ import Search from "../pages/Search";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../pages/DonationRequestDetails";
 import Blog from "../pages/Blog";
+import BlogDetails from "../pages/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         Component: Blog,
+      },
+      {
+        path: "/blog/:id",
+        Component: BlogDetails,
       },
     ],
   },

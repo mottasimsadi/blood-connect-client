@@ -134,7 +134,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between w-64 min-h-full bg-white text-base-content">
+    <div className="flex flex-col justify-between w-64 min-h-full bg-white text-base-content border-r border-[#64748b]/30">
       {/* Top part of sidebar: Logo and Navigation */}
       <div>
         {/* Sidebar Header */}

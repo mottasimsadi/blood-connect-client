@@ -187,7 +187,7 @@ const AllUsers = () => {
                 htmlFor="statusFilter"
                 className="flex items-center gap-2 font-medium text-gray-600 whitespace-nowrap"
               >
-                <FaFilter className="text-lg" /> <span>Filter by Status:</span>
+                <FaFilter /> <span>Filter by Status:</span>
               </label>
               <select
                 id="statusFilter"

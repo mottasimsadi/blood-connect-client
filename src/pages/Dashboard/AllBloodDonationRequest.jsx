@@ -1,8 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../providers/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import {
   FaEye,
@@ -11,12 +10,10 @@ import {
   FaCheckCircle,
   FaTimesCircle,
   FaFilter,
-  FaPlus,
 } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
-const MyDonationRequests = () => {
-  const { user } = useContext(AuthContext);
+const AllBloodDonationRequest = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -26,16 +23,12 @@ const MyDonationRequests = () => {
   const itemsPerPage = 5;
 
   const { data: requests = [], isLoading } = useQuery({
-    queryKey: ["my-all-requests", user?.email, statusFilter],
+    queryKey: ["all-donation-requests", statusFilter],
     queryFn: async () => {
-      const url =
-        statusFilter === "all"
-          ? `/donation-requests/my-requests`
-          : `/donation-requests/my-requests?status=${statusFilter}`;
+      const url = `/donation-requests?status=${statusFilter}`;
       const { data } = await axiosSecure.get(url);
       return data;
     },
-    enabled: !!user?.email,
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -43,7 +36,7 @@ const MyDonationRequests = () => {
       axiosSecure.patch(`/donation-requests/${id}`, { status }),
     onSuccess: () => {
       Swal.fire("Updated!", "The donation status has been updated.", "success");
-      queryClient.invalidateQueries({ queryKey: ["my-all-requests"] });
+      queryClient.invalidateQueries({ queryKey: ["all-donation-requests"] });
     },
     onError: (error) =>
       Swal.fire("Error!", error.message || "Could not update status.", "error"),
@@ -57,7 +50,7 @@ const MyDonationRequests = () => {
         "The donation request has been deleted.",
         "success"
       );
-      queryClient.invalidateQueries({ queryKey: ["my-all-requests"] });
+      queryClient.invalidateQueries({ queryKey: ["all-donation-requests"] });
     },
     onError: (error) =>
       Swal.fire(
@@ -112,20 +105,14 @@ const MyDonationRequests = () => {
     <div className="space-y-6 p-4">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
+        <div className="mx-auto text-center">
           <h1 className="text-3xl font-bold text-[#ef4343]">
-            My Donation Requests
+            All Blood Donation Requests
           </h1>
           <p className="text-gray-500 mt-1">
-            View, manage, and track all your requests.
+            Manage and oversee all requests from users.
           </p>
         </div>
-        <Link
-          to="/dashboard/create-donation-request"
-          className="btn bg-[#ef4343] border-none text-white hover:bg-[#d13838]"
-        >
-          <FaPlus /> Create New Request
-        </Link>
       </div>
 
       {/* Main Content Card */}
@@ -171,6 +158,7 @@ const MyDonationRequests = () => {
                     <th>Recipient</th>
                     <th>Location</th>
                     <th>Donation Date</th>
+                    <th>Requester Info</th>
                     <th>Status</th>
                     <th>Donor Info</th>
                     <th className="text-center">Actions</th>
@@ -183,6 +171,14 @@ const MyDonationRequests = () => {
                       <td>{`${request.recipientDistrict}, ${request.recipientUpazila}`}</td>
                       <td>
                         {new Date(request.donationDate).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <div>
+                          <p className="font-medium">{request.requesterName}</p>
+                          <p className="text-xs text-gray-500">
+                            {request.requesterEmail}
+                          </p>
+                        </div>
                       </td>
                       <td>
                         <span
@@ -316,4 +312,4 @@ const MyDonationRequests = () => {
   );
 };
 
-export default MyDonationRequests;
+export default AllBloodDonationRequest;

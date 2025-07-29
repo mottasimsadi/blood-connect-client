@@ -14,6 +14,7 @@ import AllUsers from "../pages/Dashboard/AllUsers";
 import AllBloodDonationRequest from "../pages/Dashboard/AllBloodDonationRequest";
 import ContentManagement from "../pages/Dashboard/ContentManagement";
 import AddBlog from "../pages/Dashboard/AddBlog";
+import Search from "../pages/Search";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/search",
+        Component: Search,
       },
     ],
   },

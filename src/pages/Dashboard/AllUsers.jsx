@@ -372,7 +372,7 @@ const AllUsers = () => {
                   <MdNavigateBefore className="text-xl" />
                 </button>
                 <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
-                  Page {currentPage}
+                  Page {currentPage} / {totalPages}
                 </button>
                 <button
                   onClick={() => setCurrentPage((p) => p + 1)}

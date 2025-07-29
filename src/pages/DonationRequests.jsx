@@ -10,10 +10,15 @@ import {
 } from "react-icons/fa";
 import Loading from "../pages/Loading";
 import { RiFileListLine } from "react-icons/ri";
+import { useState } from "react";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const DonationRequests = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ["public-pending-requests"],
@@ -21,6 +26,7 @@ const DonationRequests = () => {
       const { data } = await axiosPublic.get("/donation-requests/pending");
       return data;
     },
+    refetchOnMount: "always",
   });
 
   const handleViewDetails = (id) => {
@@ -36,6 +42,10 @@ const DonationRequests = () => {
     return `${formattedHours}:${minutes} ${suffix}`;
   };
 
+  const totalPages = Math.ceil(requests.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedRequests = requests.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#ef4343]/5 via-white to-[#ef4343]/10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,6 +59,7 @@ const DonationRequests = () => {
           </p>
         </div>
 
+        {/* Empty State */}
         {isLoading ? (
           <Loading />
         ) : requests.length === 0 ? (
@@ -66,7 +77,7 @@ const DonationRequests = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {requests.map((request) => (
+            {paginatedRequests.map((request) => (
               <div
                 key={request._id}
                 className="card bg-white shadow-xl border border-gray-200 transition-shadow hover:shadow-2xl flex flex-col"
@@ -120,6 +131,35 @@ const DonationRequests = () => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex justify-between items-center mt-8">
+            <p className="text-sm text-gray-600">
+              Showing {startIndex + 1} to{" "}
+              {Math.min(startIndex + itemsPerPage, requests.length)} of{" "}
+              {requests.length} posts
+            </p>
+            <div className="join">
+              <button
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none mr-2"
+                disabled={currentPage === 1}
+              >
+                <MdNavigateBefore className="text-xl" />
+              </button>
+              <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                Page {currentPage} / {totalPages}
+              </button>
+              <button
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none"
+                disabled={currentPage === totalPages}
+              >
+                <MdNavigateNext className="text-xl" />
+              </button>
+            </div>
           </div>
         )}
       </div>

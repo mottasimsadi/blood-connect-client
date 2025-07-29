@@ -197,11 +197,13 @@ const DonationRequestDetails = () => {
               />
             </div>
             <div className="modal-action justify-center gap-2">
-              <button className="btn">Cancel</button>
+              <button className="btn text-[#ef4343] bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white">
+                Cancel
+              </button>
               <button
                 type="button"
                 onClick={handleConfirmDonation}
-                className="btn bg-[#ef4343] border-none text-white"
+                className="btn bg-[#ef4343] border-none hover:opacity-70 text-white"
                 disabled={isConfirming}
               >
                 {isConfirming ? (

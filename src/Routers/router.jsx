@@ -17,6 +17,7 @@ import AddBlog from "../pages/Dashboard/AddBlog";
 import Search from "../pages/Search";
 import DonationRequests from "../pages/DonationRequests";
 import DonationRequestDetails from "../pages/DonationRequestDetails";
+import Blog from "../pages/Blog";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         Component: Search,
+      },
+      {
+        path: "/blog",
+        Component: Blog,
       },
     ],
   },

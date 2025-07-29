@@ -209,7 +209,7 @@ const Profile = () => {
       </div>
 
       <form onSubmit={handleSave}>
-        <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
+        <div className="card bg-white shadow-xl border border-gray-200">
           <div className="card-body p-6 md:p-8">
             <h2 className="card-title text-xl text-gray-700 font-semibold mb-6">
               Personal Information
@@ -368,7 +368,8 @@ const Profile = () => {
         </div>
       </form>
 
-      <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      {/* Account Information */}
+      <div className="card bg-white shadow-xl border border-gray-200">
         <div className="card-body p-6 md:p-8">
           <h2 className="card-title text-xl text-gray-700 font-semibold mb-4">
             Account Information

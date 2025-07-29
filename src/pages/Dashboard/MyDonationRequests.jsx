@@ -129,7 +129,7 @@ const MyDonationRequests = () => {
       </div>
 
       {/* Main Content Card */}
-      <div className="card bg-white shadow-xl">
+      <div className="card bg-white shadow-xl border border-gray-200">
         <div className="card-body">
           <div className="flex flex-col items-stretch sm:flex-row sm:justify-end gap-2 mb-4">
             <div className="flex items-center gap-2">

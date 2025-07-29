@@ -135,7 +135,7 @@ const CreateDonationRequest = () => {
       </div>
 
       {/* Form Card */}
-      <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      <div className="card bg-white shadow-xl border border-gray-200">
         <div className="card-body text-base-100 p-6 md:p-8">
           <div className="card-title text-2xl my-4 flex mx-auto">
             Donation Request Details

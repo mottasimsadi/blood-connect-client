@@ -137,7 +137,7 @@ const DonorDashboard = () => {
 
       {/* Donor's Recent Requests Section */}
       {recentRequests.length > 0 ? (
-        <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
+        <div className="card bg-white shadow-xl border border-gray-200">
           <div className="card-body">
             <h2 className="card-title text-2xl mb-4">
               Your Recent Donation Requests

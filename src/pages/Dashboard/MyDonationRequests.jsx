@@ -14,6 +14,7 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const MyDonationRequests = () => {
   const { user } = useContext(AuthContext);
@@ -36,6 +37,7 @@ const MyDonationRequests = () => {
       return data;
     },
     enabled: !!user?.email,
+    refetchOnMount: "always",
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -108,6 +110,15 @@ const MyDonationRequests = () => {
     startIndex + itemsPerPage
   );
 
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const [hours, minutes] = timeString.split(":");
+    const hoursInt = parseInt(hours, 10);
+    const suffix = hoursInt >= 12 ? "PM" : "AM";
+    const formattedHours = ((hoursInt + 11) % 12) + 1; // Converts 24h to 12h format
+    return `${formattedHours}:${minutes} ${suffix}`;
+  };
+
   return (
     <div className="space-y-6 p-4">
       {/* Page Header */}
@@ -163,17 +174,19 @@ const MyDonationRequests = () => {
           )}
 
           {!isLoading && requests.length > 0 && (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto text-base-100">
               <table className="table w-full">
-                {/* Table head and body */}
-                <thead>
+                {/* head */}
+                <thead className="text-base-100">
                   <tr>
-                    <th>Recipient</th>
+                    <th>Recipient Name</th>
                     <th>Location</th>
                     <th>Donation Date</th>
+                    <th>Donation Time</th>
+                    <th>Blood Group</th>
                     <th>Status</th>
                     <th>Donor Info</th>
-                    <th className="text-center">Actions</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -181,9 +194,11 @@ const MyDonationRequests = () => {
                     <tr key={request._id} className="hover">
                       <td>{request.recipientName}</td>
                       <td>{`${request.recipientDistrict}, ${request.recipientUpazila}`}</td>
-                      <td>
-                        {new Date(request.donationDate).toLocaleDateString()}
-                      </td>
+                      <td>{`${new Date(
+                        request.donationDate
+                      ).toLocaleDateString()}`}</td>
+                      <td>{`${formatTime(request.donationTime)}`}</td>
+                      <td>{`${request.bloodGroup}`}</td>
                       <td>
                         <span
                           className={`badge ${getStatusBadge(
@@ -205,37 +220,36 @@ const MyDonationRequests = () => {
                           "No donor yet"
                         )}
                       </td>
-                      <td className="text-center space-x-1">
+                      <td className="space-x-1">
+                        {/* Conditional "Done" and "Cancel" buttons */}
                         {request.status === "inprogress" && (
                           <>
                             <button
                               onClick={() =>
                                 handleStatusChange(request._id, "done")
                               }
-                              className="btn btn-success btn-xs text-white"
-                              title="Mark as Done"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             >
-                              <FaCheckCircle />
+                              <FaCheckCircle /> Done
                             </button>
                             <button
                               onClick={() =>
                                 handleStatusChange(request._id, "canceled")
                               }
-                              className="btn btn-error btn-xs text-white"
-                              title="Cancel Request"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             >
-                              <FaTimesCircle />
+                              <FaTimesCircle /> Cancel
                             </button>
                           </>
                         )}
+                        {/* Standard Action Buttons */}
                         <button
                           onClick={() =>
                             navigate(
                               `/dashboard/donation-request/${request._id}`
                             )
                           }
-                          className="btn btn-ghost btn-xs"
-                          title="View"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaEye />
                         </button>
@@ -245,15 +259,13 @@ const MyDonationRequests = () => {
                               `/dashboard/edit-donation-request/${request._id}`
                             )
                           }
-                          className="btn btn-ghost btn-xs"
-                          title="Edit"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(request._id)}
-                          className="btn btn-ghost btn-xs text-red-500"
-                          title="Delete"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaTrashAlt />
                         </button>

@@ -31,6 +31,7 @@ const DonorDashboard = () => {
       return data;
     },
     enabled: !!user?.email,
+    refetchOnMount: "always"
   });
 
   // 2. Mutation for updating the status of a donation request
@@ -112,6 +113,15 @@ const DonorDashboard = () => {
     }
   };
 
+    const formatTime = (timeString) => {
+      if (!timeString) return "";
+      const [hours, minutes] = timeString.split(":");
+      const hoursInt = parseInt(hours, 10);
+      const suffix = hoursInt >= 12 ? "PM" : "AM";
+      const formattedHours = ((hoursInt + 11) % 12) + 1; // Converts 24h to 12h format
+      return `${formattedHours}:${minutes} ${suffix}`;
+    };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-96">
@@ -137,19 +147,21 @@ const DonorDashboard = () => {
 
       {/* Donor's Recent Requests Section */}
       {recentRequests.length > 0 ? (
-        <div className="card bg-white shadow-xl border border-gray-200">
+        <div className="card bg-white text-base-100 shadow-xl border border-gray-200">
           <div className="card-body">
-            <h2 className="card-title text-2xl mb-4">
+            <h2 className="card-title text-base-100 text-2xl mb-4">
               Your Recent Donation Requests
             </h2>
             <div className="overflow-x-auto">
               <table className="table w-full">
                 {/* head */}
-                <thead>
+                <thead className="text-base-100">
                   <tr>
                     <th>Recipient Name</th>
                     <th>Location</th>
-                    <th>Donation Date & Time</th>
+                    <th>Donation Date</th>
+                    <th>Donation Time</th>
+                    <th>Blood Group</th>
                     <th>Status</th>
                     <th>Donor Info</th>
                     <th>Actions</th>
@@ -162,7 +174,9 @@ const DonorDashboard = () => {
                       <td>{`${request.recipientDistrict}, ${request.recipientUpazila}`}</td>
                       <td>{`${new Date(
                         request.donationDate
-                      ).toLocaleDateString()} at ${request.donationTime}`}</td>
+                      ).toLocaleDateString()}`}</td>
+                      <td>{`${formatTime(request.donationTime)}`}</td>
+                      <td>{`${request.bloodGroup}`}</td>
                       <td>
                         <span
                           className={`badge ${getStatusBadge(
@@ -192,7 +206,7 @@ const DonorDashboard = () => {
                               onClick={() =>
                                 handleStatusChange(request._id, "done")
                               }
-                              className="btn btn-success btn-xs text-white gap-1"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             >
                               <FaCheckCircle /> Done
                             </button>
@@ -200,7 +214,7 @@ const DonorDashboard = () => {
                               onClick={() =>
                                 handleStatusChange(request._id, "canceled")
                               }
-                              className="btn btn-error btn-xs text-white gap-1"
+                              className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                             >
                               <FaTimesCircle /> Cancel
                             </button>
@@ -213,7 +227,7 @@ const DonorDashboard = () => {
                               `/dashboard/donation-request/${request._id}`
                             )
                           }
-                          className="btn btn-ghost btn-xs"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaEye />
                         </button>
@@ -223,13 +237,13 @@ const DonorDashboard = () => {
                               `/dashboard/edit-donation-request/${request._id}`
                             )
                           }
-                          className="btn btn-ghost btn-xs"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(request._id)}
-                          className="btn btn-ghost btn-xs text-[#ef4343]"
+                          className="btn bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none btn-xs text-[#ef4343]"
                         >
                           <FaTrashAlt />
                         </button>

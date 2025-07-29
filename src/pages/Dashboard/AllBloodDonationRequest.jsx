@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useRole from "../../hooks/useRole";
 import {
   FaEye,
   FaEdit,
@@ -12,11 +13,14 @@ import {
   FaFilter,
 } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import Loading from "../Loading";
 
 const AllBloodDonationRequest = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { role, loading: roleLoading } = useRole();
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,6 +33,7 @@ const AllBloodDonationRequest = () => {
       const { data } = await axiosSecure.get(url);
       return data;
     },
+    enabled: role === "admin" || role === "volunteer",
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -101,26 +106,25 @@ const AllBloodDonationRequest = () => {
     startIndex + itemsPerPage
   );
 
+  if (isLoading || roleLoading) {
+    return <Loading></Loading>
+  }
+
   return (
     <div className="space-y-6 p-4">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="mx-auto text-center">
-          <h1 className="text-3xl font-bold text-[#ef4343]">
-            All Blood Donation Requests
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Manage and oversee all requests from users.
-          </p>
-        </div>
+      <div className="mx-auto text-center">
+        <h1 className="text-3xl font-bold text-[#ef4343]">
+          All Blood Donation Requests
+        </h1>
+        <p className="text-gray-500 mt-1">
+          Manage and oversee all requests from users.
+        </p>
       </div>
 
-      {/* Main Content Card */}
       <div className="card bg-white shadow-xl border border-gray-200">
         <div className="card-body">
           <div className="flex flex-col items-stretch sm:flex-row sm:justify-end gap-2 mb-4">
             <div className="flex items-center gap-2">
-              {" "}
               <label
                 htmlFor="statusFilter"
                 className="flex items-center gap-1 font-medium text-gray-600 whitespace-nowrap"
@@ -143,138 +147,135 @@ const AllBloodDonationRequest = () => {
             </div>
           </div>
 
-          {isLoading && (
-            <div className="text-center p-10">
-              <span className="loading loading-lg loading-spinner"></span>
-            </div>
-          )}
-
-          {!isLoading && requests.length > 0 && (
-            <div className="overflow-x-auto">
-              <table className="table w-full">
-                {/* Table head and body */}
-                <thead>
-                  <tr>
-                    <th>Recipient</th>
-                    <th>Location</th>
-                    <th>Donation Date</th>
-                    <th>Requester Info</th>
-                    <th>Status</th>
-                    <th>Donor Info</th>
-                    <th className="text-center">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedRequests.map((request) => (
-                    <tr key={request._id} className="hover">
-                      <td>{request.recipientName}</td>
-                      <td>{`${request.recipientDistrict}, ${request.recipientUpazila}`}</td>
-                      <td>
-                        {new Date(request.donationDate).toLocaleDateString()}
-                      </td>
-                      <td>
+          <div className="overflow-x-auto">
+            <table className="table w-full">
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Location</th>
+                  <th>Donation Date</th>
+                  <th>Requester Info</th>
+                  <th>Status</th>
+                  <th>Donor Info</th>
+                  <th className="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedRequests.map((request) => (
+                  <tr key={request._id} className="hover">
+                    <td>{request.recipientName}</td>
+                    <td>{`${request.recipientDistrict}, ${request.recipientUpazila}`}</td>
+                    <td>
+                      {new Date(request.donationDate).toLocaleDateString()}
+                    </td>
+                    <td>
+                      <div>
+                        <p className="font-medium">{request.requesterName}</p>
+                        <p className="text-xs text-gray-500">
+                          {request.requesterEmail}
+                        </p>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className={`badge ${getStatusBadge(
+                          request.status
+                        )} capitalize`}
+                      >
+                        {request.status}
+                      </span>
+                    </td>
+                    <td>
+                      {request.status === "inprogress" ? (
                         <div>
-                          <p className="font-medium">{request.requesterName}</p>
+                          <p>{request.donorName}</p>
                           <p className="text-xs text-gray-500">
-                            {request.requesterEmail}
+                            {request.donorEmail}
                           </p>
                         </div>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${getStatusBadge(
-                            request.status
-                          )} capitalize`}
-                        >
-                          {request.status}
-                        </span>
-                      </td>
-                      <td>
-                        {request.status === "inprogress" ? (
-                          <div>
-                            <p>{request.donorName}</p>
-                            <p className="text-xs text-gray-500">
-                              {request.donorEmail}
-                            </p>
-                          </div>
-                        ) : (
-                          "No donor yet"
-                        )}
-                      </td>
-                      <td className="text-center space-x-1">
-                        {request.status === "inprogress" && (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleStatusChange(request._id, "done")
-                              }
-                              className="btn btn-success btn-xs text-white"
-                              title="Mark as Done"
-                            >
-                              <FaCheckCircle />
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleStatusChange(request._id, "canceled")
-                              }
-                              className="btn btn-error btn-xs text-white"
-                              title="Cancel Request"
-                            >
-                              <FaTimesCircle />
-                            </button>
-                          </>
-                        )}
-                        <button
-                          onClick={() =>
-                            navigate(
-                              `/dashboard/donation-request/${request._id}`
-                            )
-                          }
-                          className="btn btn-ghost btn-xs"
-                          title="View"
-                        >
-                          <FaEye />
-                        </button>
-                        <button
-                          onClick={() =>
-                            navigate(
-                              `/dashboard/edit-donation-request/${request._id}`
-                            )
-                          }
-                          className="btn btn-ghost btn-xs"
-                          title="Edit"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(request._id)}
-                          className="btn btn-ghost btn-xs text-red-500"
-                          title="Delete"
-                        >
-                          <FaTrashAlt />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                      ) : (
+                        "No donor yet"
+                      )}
+                    </td>
+                    <td className="text-center space-x-1">
+                      {/* View Button (Visible to both Admin and Volunteer) */}
+                      <button
+                        onClick={() =>
+                          navigate(`/dashboard/donation-request/${request._id}`)
+                        }
+                        className="btn btn-ghost btn-xs"
+                        title="View"
+                      >
+                        <FaEye />
+                      </button>
 
-          {/* Empty State */}
+                      {/* Status Buttons (Visible to both Admin and Volunteer) */}
+                      {request.status === "inprogress" && (
+                        <>
+                          <button
+                            onClick={() =>
+                              handleStatusChange(request._id, "done")
+                            }
+                            className="btn btn-success btn-xs text-white"
+                            title="Mark as Done"
+                          >
+                            <FaCheckCircle />
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleStatusChange(request._id, "canceled")
+                            }
+                            className="btn btn-error btn-xs text-white"
+                            title="Cancel Request"
+                          >
+                            <FaTimesCircle />
+                          </button>
+                        </>
+                      )}
+
+                      {/* Admin-Only Buttons */}
+                      {role === "admin" && (
+                        <>
+                          <button
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/edit-donation-request/${request._id}`
+                              )
+                            }
+                            className="btn btn-ghost btn-xs"
+                            title="Edit"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(request._id)}
+                            className="btn btn-ghost btn-xs text-red-500"
+                            title="Delete"
+                          >
+                            <FaTrashAlt />
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           {!isLoading && requests.length === 0 && (
-            <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
-              <div className="card-body items-center text-center">
-                <FaMagnifyingGlass className="text-6xl text-[#ef4343] mb-4" />
-                <h3 className="card-title text-base-100 text-2xl">
-                  No Requests Found
-                </h3>
-                <p className="text-[#64748b] mt-2">
-                  No requests match the status "
-                  <span className="text-[#ef4343]">{statusFilter}</span>". Try
-                  another filter or create a new request!
-                </p>
-              </div>
+            <div className="text-center py-10">
+              <FaMagnifyingGlass className="text-6xl text-[#ef4343] opacity-50 mb-4 mx-auto" />
+              <h3 className="text-xl font-semibold text-gray-700">
+                No Requests Found
+              </h3>
+              <p className="text-gray-500 mt-2">
+                No requests match the status "
+                <span className="font-semibold text-[#ef4343]">
+                  {statusFilter}
+                </span>
+                ".
+              </p>
             </div>
           )}
 

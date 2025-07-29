@@ -101,7 +101,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
         ...baseItems,
         { name: "All Users", href: "/dashboard/all-users", icon: FaUsers },
         {
-          name: "All Blood Donation Requests",
+          name: "All Blood Donation Request",
           href: "/dashboard/all-blood-donation-request",
           icon: FaTint,
         },
@@ -118,7 +118,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
       return [
         ...baseItems,
         {
-          name: "All Requests",
+          name: "All Blood Donation Request",
           href: "/dashboard/all-blood-donation-request",
           icon: FaTint,
         },

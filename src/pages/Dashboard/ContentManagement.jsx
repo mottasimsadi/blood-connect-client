@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useRole from "../../hooks/useRole";
 import {
   FaPlus,
   FaFilter,
@@ -12,10 +13,13 @@ import {
 } from "react-icons/fa";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import Loading from "../Loading";
 
 const ContentManagement = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const { role, loading: roleLoading } = useRole();
+
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -26,6 +30,7 @@ const ContentManagement = () => {
       const { data } = await axiosSecure.get(`/blogs?status=${statusFilter}`);
       return data;
     },
+    enabled: role === "admin" || role === "volunteer",
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -110,6 +115,10 @@ const ContentManagement = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedBlogs = blogs.slice(startIndex, startIndex + itemsPerPage);
 
+  if (isLoading || roleLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="space-y-6 p-4">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -182,31 +191,33 @@ const ContentManagement = () => {
                         {blog.status}
                       </span>
                       <h2 className="card-title">{blog.title}</h2>
-                      <div className="card-actions justify-end mt-2">
-                        {blog.status === "draft" ? (
+                      {role === "admin" && (
+                        <div className="card-actions justify-end mt-2">
+                          {blog.status === "draft" ? (
+                            <button
+                              onClick={() =>
+                                handleStatusChange(blog, "published")
+                              }
+                              className="btn btn-success btn-sm text-white"
+                            >
+                              <FaUpload className="mr-1" /> Publish
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleStatusChange(blog, "draft")}
+                              className="btn btn-warning btn-sm text-white"
+                            >
+                              <FaEyeSlash className="mr-1" /> Unpublish
+                            </button>
+                          )}
                           <button
-                            onClick={() =>
-                              handleStatusChange(blog, "published")
-                            }
-                            className="btn btn-success btn-sm text-white"
+                            onClick={() => handleDelete(blog)}
+                            className="btn btn-error btn-sm text-white"
                           >
-                            <FaUpload className="mr-1" /> Publish
+                            <FaTrashAlt className="mr-1" /> Delete
                           </button>
-                        ) : (
-                          <button
-                            onClick={() => handleStatusChange(blog, "draft")}
-                            className="btn btn-warning btn-sm text-white"
-                          >
-                            <FaEyeSlash className="mr-1" /> Unpublish
-                          </button>
-                        )}
-                        <button
-                          onClick={() => handleDelete(blog)}
-                          className="btn btn-error btn-sm text-white"
-                        >
-                          <FaTrashAlt className="mr-1" /> Delete
-                        </button>
-                      </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}

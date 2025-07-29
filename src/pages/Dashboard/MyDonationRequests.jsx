@@ -202,7 +202,7 @@ const MyDonationRequests = () => {
                             </p>
                           </div>
                         ) : (
-                          "N/A"
+                          "No donor yet"
                         )}
                       </td>
                       <td className="text-center space-x-1">
@@ -292,20 +292,20 @@ const MyDonationRequests = () => {
               <div className="join">
                 <button
                   onClick={() => setCurrentPage((p) => p - 1)}
-                  className="join-item btn"
+                  className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none mr-2"
                   disabled={currentPage === 1}
                 >
-                  «
+                  <MdNavigateBefore className="text-xl" />
                 </button>
-                <button className="join-item btn pointer-events-none">
+                <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
                   Page {currentPage}
                 </button>
                 <button
                   onClick={() => setCurrentPage((p) => p + 1)}
-                  className="join-item btn"
+                  className="join-item btn btn-sm bg-transparent border-[#ef4343] text-[#ef4343] hover:bg-[#ef4343] hover:text-white disabled:text-white disabled:border-none"
                   disabled={currentPage === totalPages}
                 >
-                  »
+                  <MdNavigateNext className="text-xl" />
                 </button>
               </div>
             </div>

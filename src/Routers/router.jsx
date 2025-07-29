@@ -71,12 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/content-management",
         Component: ContentManagement,
-        children: [
-          {
-            path: "/dashboard/content-management/add-blog",
-            Component: AddBlog,
-          },
-        ],
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        Component: AddBlog,
       },
     ],
   },

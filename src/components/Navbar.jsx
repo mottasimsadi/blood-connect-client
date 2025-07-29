@@ -15,6 +15,7 @@ import {
 import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 import useRole from "../hooks/useRole";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -85,6 +86,11 @@ const Navbar = () => {
       name: "Donation Requests",
       href: "/donation-requests",
       icon: FaHandHoldingMedical,
+    },
+    {
+      name: "Search Donors",
+      href: "/search",
+      icon: FaMagnifyingGlass,
     },
     { name: "Blog", href: "/blog", icon: FaBook },
   ];

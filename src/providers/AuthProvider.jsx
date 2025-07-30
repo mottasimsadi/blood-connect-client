@@ -78,7 +78,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("🚀 ~ onAuthStateChanged ~ currentUser:", currentUser);
+      // console.log("🚀 ~ onAuthStateChanged ~ currentUser:", currentUser);
 
       if (currentUser) {
         const userInfo = {
@@ -90,7 +90,7 @@ const AuthProvider = ({ children }) => {
         axiosPublic
           .post("/add-user", userInfo)
           .then((res) => {
-            console.log("User synced with backend:", res.data);
+            // console.log("User synced with backend:", res.data);
             setUser(currentUser);
           })
           .catch((error) => {

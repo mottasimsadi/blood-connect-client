@@ -22,6 +22,8 @@ import BlogDetails from "../pages/BlogDetails";
 import EditBlog from "../pages/Dashboard/EditBlog";
 import AdminRoute from "./AdminRole";
 import AdminOrVolunteerRoute from "./AdminOrVolunteerRoute";
+import Funding from "../pages/Funding";
+import FundingStatus from "../pages/Dashboard/FundingStatus";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
       {
         path: "/blog/:id",
         Component: BlogDetails,
+      },
+      {
+        path: "/funding",
+        element: (
+          <PrivateRoute>
+            <Funding></Funding>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -125,11 +135,19 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "content-management/edit-blog/:id",
+        path: "/dashboard/content-management/edit-blog/:id",
         element: (
           <AdminOrVolunteerRoute>
             <EditBlog></EditBlog>
           </AdminOrVolunteerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/funding-status",
+        element: (
+          <AdminRoute>
+            <FundingStatus></FundingStatus>
+          </AdminRoute>
         ),
       },
     ],

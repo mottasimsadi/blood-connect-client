@@ -110,7 +110,7 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
           href: "/dashboard/content-management",
           icon: FaFileAlt,
         },
-        { name: "Funding", href: "/dashboard/funding", icon: FaDollarSign },
+        { name: "Funding", href: "/dashboard/funding-status", icon: FaDollarSign },
       ];
     }
 

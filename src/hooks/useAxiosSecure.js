@@ -6,7 +6,7 @@ const useAxiosSecure = () => {
   const { user } = useContext(AuthContext);
 
   const instance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://blood-connect-server.vercel.app",
   });
 
   // Add request interceptor to include token only if user exists

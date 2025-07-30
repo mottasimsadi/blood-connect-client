@@ -21,9 +21,9 @@ const EditBlog = () => {
 
   // 1. Fetch the existing blog data
   const { data: blog, isLoading } = useQuery({
-    queryKey: ["blog-details", id],
+    queryKey: ["blog-details-edit", id],
     queryFn: async () => {
-      const { data } = await axiosSecure.get(`/blogs/${id}`);
+      const { data } = await axiosSecure.get(`/blogs/private/${id}`);
       return data;
     },
     enabled: !!id,

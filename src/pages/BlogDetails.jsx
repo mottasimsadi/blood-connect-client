@@ -16,7 +16,7 @@ const BlogDetails = () => {
   } = useQuery({
     queryKey: ["blog-details", id],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/blogs/${id}`);
+      const { data } = await axiosPublic.get(`/blogs/public/${id}`);
       return data;
     },
     enabled: !!id,

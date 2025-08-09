@@ -52,7 +52,7 @@ To run this project locally, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Programming-Hero-Web-Course4/b11a12-client-side-mottasimsadi
+    git clone https://github.com/mottasimsadi/blood-connect-client
     cd blood-connect-client
     ```
 

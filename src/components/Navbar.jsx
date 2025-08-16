@@ -97,7 +97,10 @@ const Navbar = () => {
 
   const authLinks =
     !isLoading && user
-      ? [{ name: "Funding", href: "/funding", icon: FaMoneyBillWave }]
+      ? [
+          { name: "Funding", href: "/funding", icon: FaMoneyBillWave },
+          { name: "Dashboard", href: "/dashboard", icon: FaTachometerAlt },
+        ]
       : [];
 
   const allLinks = [...commonLinks, ...authLinks];
@@ -106,7 +109,7 @@ const Navbar = () => {
 
   if (isLoading) {
     return (
-      <nav className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50 h-16">
+      <nav className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <Link to="/" className="flex items-center space-x-2">
             <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md">

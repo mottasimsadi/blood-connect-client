@@ -109,7 +109,7 @@ const Navbar = () => {
 
   if (isLoading) {
     return (
-      <nav className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50 w-full">
+      <nav className="bg-[#fffffff2] backdrop-blur-sm border-gray-200 border-b sticky top-0 z-50 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
           <Link to="/" className="flex items-center space-x-2">
             <div className="p-2 bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] rounded-lg shadow-md">
@@ -128,7 +128,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="bg-[#fffffff2] backdrop-blur-sm border-b sticky top-0 z-50"
+      className="bg-[#fffffff2] backdrop-blur-sm  border-gray-200 border-b sticky top-0 z-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">

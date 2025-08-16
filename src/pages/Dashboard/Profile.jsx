@@ -16,6 +16,7 @@ import {
   FaImage,
   FaPhone,
 } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Profile = () => {
   const { user, updateUser, loading: authLoading } = useContext(AuthContext);
@@ -26,6 +27,29 @@ const Profile = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const [formData, setFormData] = useState(null);
+
+  // Framer Motion Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
 
   // Configure SweetAlert theme
   const showSuccessAlert = (message) => {
@@ -161,14 +185,22 @@ const Profile = () => {
   if (authLoading || roleLoading || !userProfile || !formData) {
     return (
       <div className="flex justify-center items-center h-96">
-        <span className="loading loading-spinner loading-lg"></span>
+        <span className="loading loading-spinner loading-lg text-[#ef4343]"></span>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 space-y-8">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="max-w-4xl mx-auto p-4 sm:p-6 space-y-8"
+    >
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+      >
         <div>
           <h1 className="text-3xl font-bold text-gray-800">My Profile</h1>
           <p className="text-gray-500 mt-1">
@@ -176,43 +208,50 @@ const Profile = () => {
           </p>
         </div>
 
-        {!isEditing ? (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-none gap-2"
-          >
-            <FaUserEdit /> Edit Profile
-          </button>
-        ) : (
-          <div className="flex gap-2">
-            <button
-              onClick={handleCancel}
-              className="btn text-[#ef4343] bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none"
+        <AnimatePresence mode="wait">
+          {!isEditing ? (
+            <motion.button
+              key="edit-button"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              onClick={() => setIsEditing(true)}
+              className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-none gap-2"
             >
-              <FaTimes /> Cancel
-            </button>
-            <button
-              onClick={handleSave}
-              disabled={isSaving}
-              className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-[#ef4343]"
+              <FaUserEdit /> Edit Profile
+            </motion.button>
+          ) : (
+            <motion.div
+              key="action-buttons"
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="flex gap-2"
             >
-              {isSaving ? (
-                <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
-              ) : (
-                <FaSave />
-              )}
-              &nbsp;
-              {isSaving ? (
-                <span className="text-[#ef4343]">Saving...</span>
-              ) : (
-                "Save"
-              )}
-            </button>
-          </div>
-        )}
-      </div>
+              <button
+                onClick={handleCancel}
+                className="btn text-[#ef4343] bg-transparent border-[#ef4343] hover:bg-[#ef4343] hover:text-white shadow-none"
+              >
+                <FaTimes /> Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={isSaving}
+                className="btn bg-[#ef4343] hover:bg-[#d13838] text-white border-[#ef4343]"
+              >
+                {isSaving ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  <FaSave />
+                )}
+                {isSaving ? "Saving..." : "Save"}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
 
-      <form onSubmit={handleSave}>
+      <motion.form variants={itemVariants} onSubmit={handleSave}>
         <div className="card bg-white shadow-xl border border-gray-200">
           <div className="card-body p-6 md:p-8">
             <h2 className="card-title text-xl text-gray-700 font-semibold mb-6">
@@ -232,31 +271,41 @@ const Profile = () => {
                   />
                 </div>
               </div>
-              {isEditing && (
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <span className="label-text text-gray-700">
-                      Profile Photo URL
-                    </span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      name="photoURL"
-                      value={formData.photoURL}
-                      onChange={handleChange}
-                      placeholder="https://example.com/photo.jpg"
-                      className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
-                    />
-                    <FaImage className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
-                  </div>
-                </div>
-              )}
+              <AnimatePresence>
+                {isEditing && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="form-control w-full max-w-xs"
+                  >
+                    <label className="label">
+                      <span className="label-text text-gray-700">
+                        Profile Photo URL
+                      </span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="photoURL"
+                        value={formData.photoURL}
+                        onChange={handleChange}
+                        placeholder="https://example.com/photo.jpg"
+                        className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
+                      />
+                      <FaImage className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            <motion.div
+              variants={containerVariants}
+              className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4"
+            >
               {/* Name Field */}
-              <div className="form-control">
+              <motion.div variants={itemVariants} className="form-control">
                 <label className="label">
                   <span className="label-text text-gray-700">Full Name</span>
                 </label>
@@ -271,10 +320,10 @@ const Profile = () => {
                   />
                   <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Email Field */}
-              <div className="form-control">
+              <motion.div variants={itemVariants} className="form-control">
                 <label className="label">
                   <span className="label-text text-gray-700">
                     Email Address
@@ -289,10 +338,10 @@ const Profile = () => {
                   />
                   <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Phone Number Field */}
-              <div className="form-control">
+              <motion.div variants={itemVariants} className="form-control">
                 <label className="label">
                   <span className="label-text text-gray-700">Phone Number</span>
                 </label>
@@ -307,10 +356,10 @@ const Profile = () => {
                   />
                   <FaPhone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Blood Group Field */}
-              <div className="form-control">
+              <motion.div variants={itemVariants} className="form-control">
                 <label className="label">
                   <span className="label-text text-gray-700">Blood Group</span>
                 </label>
@@ -331,10 +380,10 @@ const Profile = () => {
                   </select>
                   <FaTint className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* District Field */}
-              <div className="form-control">
+              <motion.div variants={itemVariants} className="form-control">
                 <label className="label">
                   <span className="label-text text-gray-700">District</span>
                 </label>
@@ -355,10 +404,13 @@ const Profile = () => {
                   </select>
                   <FaMapMarkerAlt className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Upazila Field */}
-              <div className="form-control md:col-span-2">
+              <motion.div
+                variants={itemVariants}
+                className="form-control md:col-span-2"
+              >
                 <label className="label">
                   <span className="label-text text-gray-700">Upazila</span>
                 </label>
@@ -384,14 +436,16 @@ const Profile = () => {
                   </select>
                   <FaCity className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
-      </form>
+      </motion.form>
 
-      {/* Account Information */}
-      <div className="card bg-white shadow-xl border border-gray-200">
+      <motion.div
+        variants={itemVariants}
+        className="card bg-white shadow-xl border border-gray-200"
+      >
         <div className="card-body p-6 md:p-8">
           <h2 className="card-title text-xl text-gray-700 font-semibold mb-4">
             Account Information
@@ -427,8 +481,8 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

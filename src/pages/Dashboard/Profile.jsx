@@ -14,6 +14,7 @@ import {
   FaTint,
   FaCity,
   FaImage,
+  FaPhone,
 } from "react-icons/fa";
 
 const Profile = () => {
@@ -60,6 +61,7 @@ const Profile = () => {
             name: profile.name || user.displayName || "",
             email: profile.email || user.email || "",
             photoURL: profile.photoURL || user.photoURL || "",
+            phoneNumber: profile.phoneNumber || "",
             bloodGroup: profile.bloodGroup || "",
             district: profile.district || "",
             upazila: profile.upazila || "",
@@ -77,6 +79,7 @@ const Profile = () => {
       name: userProfile.name,
       email: userProfile.email,
       photoURL: userProfile.photoURL,
+      phoneNumber: userProfile.phoneNumber,
       bloodGroup: userProfile.bloodGroup,
       district: userProfile.district,
       upazila: userProfile.upazila,
@@ -102,6 +105,7 @@ const Profile = () => {
         {
           name: formData.name,
           photoURL: formData.photoURL,
+          phoneNumber: formData.phoneNumber,
           bloodGroup: formData.bloodGroup,
           district: formData.district,
           upazila: formData.upazila,
@@ -284,6 +288,24 @@ const Profile = () => {
                     className="input border border-gray-300 rounded-md w-full pl-10 disabled:bg-gray-100 disabled:text-gray-500 cursor-not-allowed"
                   />
                   <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
+              </div>
+
+              {/* Phone Number Field */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-gray-700">Phone Number</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 disabled:bg-gray-100 disabled:text-gray-500"
+                  />
+                  <FaPhone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
               </div>
 

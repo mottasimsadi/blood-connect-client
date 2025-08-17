@@ -14,6 +14,7 @@ import {
   FaGoogle,
   FaCity,
   FaImage,
+  FaPhone,
 } from "react-icons/fa";
 import { districts, upazilas, bloodGroups } from "../data/bangladeshData";
 import { AuthContext } from "../providers/AuthProvider";
@@ -24,15 +25,17 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phoneNumber: "",
+    photoURL: "",
     password: "",
     confirmPassword: "",
     bloodGroup: "",
     district: "",
     upazila: "",
-    photoURL: "",
   });
 
   const { createUser, googleSignIn } = useContext(AuthContext);
@@ -64,8 +67,24 @@ const Register = () => {
     return "";
   };
 
+  // Regex for phone number validation
+  const validatePhoneNumber = (phone) => {
+    // This regex checks if the string starts with a '+' and is followed by one or more digits.
+    const phoneRegex = /^\+\d+$/;
+    return phoneRegex.test(phone);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.phoneNumber && !validatePhoneNumber(formData.phoneNumber)) {
+      Swal.fire(
+        "Invalid Input",
+        "Phone number must start with '+' and contain only numbers.",
+        "error"
+      );
+      return;
+    }
 
     // Validate password
     const passwordValidationError = validatePassword(formData.password);
@@ -96,6 +115,7 @@ const Register = () => {
       const userInfo = {
         name: formData.name,
         email: formData.email,
+        phoneNumber: formData.phoneNumber,
         photoURL: result.user.photoURL,
         role: "donor",
         status: "active",
@@ -181,6 +201,14 @@ const Register = () => {
 
     if (name === "password") {
       setPasswordError("");
+    }
+
+    if (name === "phoneNumber") {
+      if (value && !validatePhoneNumber(value)) {
+        setPhoneError("Must start with '+' and contain only numbers.");
+      } else {
+        setPhoneError("");
+      }
     }
   };
 
@@ -294,27 +322,55 @@ const Register = () => {
               </motion.div>
             </div>
 
-            <motion.div
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="space-y-2"
-            >
-              <label className="block text-sm font-medium text-[#64748b]">
-                Profile Photo URL (Optional)
-              </label>
-              <div className="relative">
-                <FaImage className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
-                <input
-                  name="photoURL"
-                  type="url"
-                  value={formData.photoURL}
-                  onChange={handleChange}
-                  placeholder="Enter your photo URL"
-                  className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
-                />
-              </div>
-            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <motion.div
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="space-y-2"
+              >
+                <label className="block text-sm font-medium text-[#64748b]">
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <FaPhone className="absolute left-3 top-3 h-4 w-4 text-[#64748b]" />
+                  <input
+                    name="phoneNumber"
+                    type="tel"
+                    placeholder="e.g., +880171..."
+                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {phoneError && (
+                  <p className="text-red-500 text-xs mt-1">{phoneError}</p>
+                )}
+              </motion.div>
+
+              <motion.div
+                initial={{ x: 20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="space-y-2"
+              >
+                <label className="block text-sm font-medium text-[#64748b]">
+                  Profile Photo URL (Optional)
+                </label>
+                <div className="relative">
+                  <FaImage className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
+                  <input
+                    name="photoURL"
+                    type="url"
+                    value={formData.photoURL}
+                    onChange={handleChange}
+                    placeholder="Enter your photo URL"
+                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                  />
+                </div>
+              </motion.div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <motion.div
@@ -335,6 +391,7 @@ const Register = () => {
                       handleSelectChange("bloodGroup", e.target.value)
                     }
                     name="bloodGroup"
+                    required
                   >
                     <option value="">Select blood group</option>
                     {bloodGroups.map((group) => (
@@ -363,6 +420,7 @@ const Register = () => {
                       handleSelectChange("district", e.target.value)
                     }
                     name="district"
+                    required
                   >
                     <option value="">Select district</option>
                     {districts.map((d) => (
@@ -398,6 +456,7 @@ const Register = () => {
                     !upazilas[formData.district] ||
                     upazilas[formData.district].length === 0
                   }
+                  required
                 >
                   <option value="">
                     {formData.district &&
@@ -545,7 +604,7 @@ const Register = () => {
               <span className="loading loading-spinner loading-sm text-[#ef4343]"></span>
             ) : (
               <>
-                <FaGoogle />
+                <FaGoogle className="text-[#ef4343]" />
                 <span>Continue with Google</span>
               </>
             )}

@@ -137,6 +137,33 @@ const Home = () => {
     },
   ];
 
+  // Partners data
+  const partners = [
+    {
+      name: "Square Hospitals",
+      logoUrl: "https://www.squarehospital.com/storage/images/1551152013.jpg",
+    },
+    {
+      name: "United Hospital",
+      logoUrl: "https://uhlbd.com/assets/images/updated_logo.png",
+    },
+    {
+      name: "Dhaka Medical College",
+      logoUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/6/60/Morogram_of_Dhaka_Medical_College.svg/225px-Morogram_of_Dhaka_Medical_College.svg.png",
+    },
+    {
+      name: "Apollo Hospitals Dhaka",
+      logoUrl:
+        "https://www.healthcarebusinessinternational.com/awards/wp-content/uploads/2017/06/photo.jpg",
+    },
+    {
+      name: "BSMMU",
+      logoUrl:
+        "https://images.seeklogo.com/logo-png/33/1/bangabandhu-sheikh-mujib-medical-university-logo-png_seeklogo-337132.png",
+    },
+  ];
+
   // Form state and handlers
   const [formData, setFormData] = useState({
     name: "",
@@ -438,6 +465,49 @@ const Home = () => {
                 <FaMapMarkerAlt className="mr-2" />
                 Find Blood Requests
               </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Our Partners Section */}
+      <section id="partners" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300 p-8"
+          >
+            <div className="card-body items-center text-center">
+              <h2 className="card-title text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                Our Trusted Partners
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+                We collaborate with leading hospitals and organizations to
+                ensure safe and timely blood transfusions.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-x-20 gap-y-16">
+                {partners.map((partner, index) => (
+                  <motion.a
+                    key={partner.name}
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="tooltip"
+                    data-tip={partner.name}
+                  >
+                    <img
+                      src={partner.logoUrl}
+                      alt={`${partner.name} logo`}
+                      className="h-16 w-auto object-contain filter transition-all duration-300"
+                    />
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>

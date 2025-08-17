@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import {
   FaSearch,
   FaRegHeart,
@@ -13,12 +13,32 @@ import {
   FaPhone,
   FaEnvelope,
   FaExclamationTriangle,
+  FaTint,
+  FaCalendarAlt,
+  FaEye,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../hooks/axiosPublic";
+import Loading from "../pages/Loading";
 
 const Home = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
+  // Data Fetching for Latest Donation Request Section
+  const { data: latestRequests = [], isLoading: requestsLoading } = useQuery({
+    queryKey: ["latest-pending-requests"],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get("/donation-requests/pending");
+      // Sort by date to be sure and get the latest 6
+      return data
+        .sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate))
+        .slice(0, 6);
+    },
+  });
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -212,6 +232,19 @@ const Home = () => {
     setNewsletterEmail("");
   };
 
+  // Helper function for card buttons
+  const handleViewDetails = (id) => navigate(`/donation-request/${id}`);
+
+  // Helper function for time formatting
+  const formatTime = (timeString) => {
+    if (!timeString) return "";
+    const [hours, minutes] = timeString.split(":");
+    const hoursInt = parseInt(hours, 10);
+    const suffix = hoursInt >= 12 ? "PM" : "AM";
+    const formattedHours = ((hoursInt + 11) % 12) + 1;
+    return `${formattedHours}:${minutes} ${suffix}`;
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -341,6 +374,109 @@ const Home = () => {
           </div>
         </motion.div>
       </motion.div>
+
+      {/* Latest Donation Request Section */}
+      <section id="latest-requests" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Latest Donation Requests
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Be a hero. Respond to one of the most recent requests for help
+              from our community.
+            </p>
+          </motion.div>
+
+          {requestsLoading ? (
+            <Loading />
+          ) : (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {latestRequests.map((request) => (
+                <motion.div
+                  key={request._id}
+                  variants={{
+                    hidden: { y: 20, opacity: 0 },
+                    visible: { y: 0, opacity: 1 },
+                  }}
+                  className="card bg-white shadow-xl border border-gray-200 transition-shadow hover:shadow-2xl flex flex-col"
+                >
+                  <div className="card-body flex-grow">
+                    <div className="mb-4">
+                      <h2 className="card-title text-gray-800 text-xl">
+                        {request.recipientName}
+                      </h2>
+                      <div className="badge bg-red-100 text-red-800 border-none font-bold p-3 mt-2">
+                        <FaTint className="mr-1" />
+                        {request.bloodGroup}
+                      </div>
+                    </div>
+                    <div className="space-y-3 text-sm text-[#64748b] flex-grow">
+                      <p className="flex items-start gap-2">
+                        <FaMapMarkerAlt className="mt-1" />
+                        <span>
+                          <strong className="text-gray-800">Location:</strong>{" "}
+                          {request.recipientUpazila},{" "}
+                          {request.recipientDistrict}
+                        </span>
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <FaCalendarAlt />
+                        <span>
+                          <strong className="text-gray-800">Date:</strong>{" "}
+                          {new Date(request.donationDate).toLocaleDateString(
+                            "en-US",
+                            { year: "numeric", month: "long", day: "numeric" }
+                          )}
+                        </span>
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <FaClock />
+                        <span>
+                          <strong className="text-gray-800">Time:</strong>{" "}
+                          {formatTime(request.donationTime)}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="card-actions justify-end mt-4">
+                      <button
+                        onClick={() => handleViewDetails(request._id)}
+                        className="btn bg-[#ef4343] text-white border-none hover:bg-[#d13838] w-full"
+                      >
+                        <FaEye /> View Details
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-center mt-12"
+          >
+            <Link
+              to="/donation-requests"
+              className="btn bg-transparent border-[#ef4343] text-[#ef4343] shadow-none hover:bg-[#ef4343] hover:text-white px-8"
+            >
+              View All Requests
+            </Link>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section id="features" className="py-20 bg-white">

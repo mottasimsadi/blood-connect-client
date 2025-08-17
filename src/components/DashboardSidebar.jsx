@@ -11,6 +11,7 @@ import {
   FaGlobe,
   FaHandsHelping,
   FaRegHeart,
+  FaChartPie,
 } from "react-icons/fa";
 import { GoSidebarExpand } from "react-icons/go";
 import { AuthContext } from "../providers/AuthProvider";
@@ -99,6 +100,11 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
     if (role === "admin") {
       return [
         ...baseItems,
+        {
+          name: "Statistics",
+          href: "/dashboard/statistics",
+          icon: FaChartPie,
+        },
         { name: "All Users", href: "/dashboard/all-users", icon: FaUsers },
         {
           name: "All Blood Donation Request",
@@ -110,7 +116,11 @@ const DashboardSidebar = ({ closeSidebar, isMobile = false }) => {
           href: "/dashboard/content-management",
           icon: FaFileAlt,
         },
-        { name: "Funding", href: "/dashboard/funding-status", icon: FaDollarSign },
+        {
+          name: "Funding",
+          href: "/dashboard/funding-status",
+          icon: FaDollarSign,
+        },
       ];
     }
 

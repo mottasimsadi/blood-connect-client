@@ -24,6 +24,7 @@ import AdminRoute from "./AdminRole";
 import AdminOrVolunteerRoute from "./AdminOrVolunteerRoute";
 import Funding from "../pages/Funding";
 import FundingStatus from "../pages/Dashboard/FundingStatus";
+import Statistics from "../pages/Dashboard/Statistics";
 
 const router = createBrowserRouter([
   {
@@ -107,6 +108,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/statistics",
+        element: (
+          <AdminRoute>
+            <Statistics></Statistics>
           </AdminRoute>
         ),
       },

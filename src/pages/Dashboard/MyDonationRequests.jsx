@@ -216,7 +216,7 @@ const MyDonationRequests = () => {
               </label>
               <select
                 id="statusFilter"
-                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-base-100 select-sm w-48"
+                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-black select-sm w-48"
                 value={statusFilter}
                 onChange={handleFilterChange}
               >
@@ -231,15 +231,15 @@ const MyDonationRequests = () => {
 
           {isLoading && (
             <div className="text-center p-10">
-              <span className="loading loading-lg loading-spinner"></span>
+              <span className="loading loading-lg loading-spinner text-[#ef4343]"></span>
             </div>
           )}
 
           {!isLoading && requests.length > 0 && (
-            <div className="overflow-x-auto text-base-100">
+            <div className="overflow-x-auto text-black">
               <table className="table w-full">
                 {/* head */}
-                <thead className="text-base-100">
+                <thead className="text-black">
                   <tr>
                     <th>Recipient Name</th>
                     <th>Location</th>
@@ -338,7 +338,7 @@ const MyDonationRequests = () => {
             <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="card-body items-center text-center">
                 <FaMagnifyingGlass className="text-6xl text-[#ef4343] mb-4" />
-                <h3 className="card-title text-base-100 text-2xl">
+                <h3 className="card-title text-black text-2xl">
                   No Requests Found
                 </h3>
                 <p className="text-[#64748b] mt-2">
@@ -365,7 +365,7 @@ const MyDonationRequests = () => {
                 >
                   <MdNavigateBefore className="text-xl" />
                 </button>
-                <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                <button className="join-item btn btn-sm pointer-events-none bg-transparent text-black mr-2 rounded-md">
                   Page {currentPage}
                 </button>
                 <button
@@ -451,7 +451,7 @@ const MyDonationRequests = () => {
                     value={editFormData.recipientName}
                     onChange={handleEditFormChange}
                     required
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   />
                 </div>
               </div>
@@ -471,7 +471,7 @@ const MyDonationRequests = () => {
                       value={editFormData.recipientDistrict}
                       onChange={handleEditFormChange}
                       required
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 mb-1"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black mb-1"
                     >
                       <option value="">Select district</option>
                       {districts.map((d) => (
@@ -496,7 +496,7 @@ const MyDonationRequests = () => {
                       onChange={handleEditFormChange}
                       required
                       disabled={!editFormData.recipientDistrict}
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black disabled:bg-gray-100 disabled:text-gray-500"
                     >
                       <option value="">Select upazila</option>
                       {editFormData.recipientDistrict &&
@@ -525,7 +525,7 @@ const MyDonationRequests = () => {
                     value={editFormData.hospitalName}
                     onChange={handleEditFormChange}
                     required
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   />
                 </div>
               </div>
@@ -543,7 +543,7 @@ const MyDonationRequests = () => {
                     value={editFormData.fullAddress}
                     onChange={handleEditFormChange}
                     required
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   />
                 </div>
               </div>
@@ -563,7 +563,7 @@ const MyDonationRequests = () => {
                       value={editFormData.bloodGroup}
                       onChange={handleEditFormChange}
                       required
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black"
                     >
                       <option value="">Select group</option>
                       {bloodGroups.map((bg) => (
@@ -592,7 +592,7 @@ const MyDonationRequests = () => {
                       }
                       onChange={handleEditFormChange}
                       required
-                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                      className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                     />
                   </div>
                 </div>
@@ -610,7 +610,7 @@ const MyDonationRequests = () => {
                       value={editFormData.donationTime}
                       onChange={handleEditFormChange}
                       required
-                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                      className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                     />
                   </div>
                 </div>
@@ -630,7 +630,7 @@ const MyDonationRequests = () => {
                     value={editFormData.requestMessage}
                     onChange={handleEditFormChange}
                     required
-                    className="textarea pl-10 text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 w-full "
+                    className="textarea pl-10 text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 w-full "
                   ></textarea>
                 </div>
               </div>

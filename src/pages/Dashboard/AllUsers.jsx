@@ -191,7 +191,7 @@ const AllUsers = () => {
               </label>
               <select
                 id="statusFilter"
-                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-base-100 select-sm w-48 max-w-xs"
+                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-black select-sm w-48 max-w-xs"
                 value={statusFilter}
                 onChange={handleFilterChange}
               >
@@ -371,7 +371,7 @@ const AllUsers = () => {
                 >
                   <MdNavigateBefore className="text-xl" />
                 </button>
-                <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                <button className="join-item btn btn-sm pointer-events-none bg-transparent text-black mr-2 rounded-md">
                   Page {currentPage} / {totalPages}
                 </button>
                 <button

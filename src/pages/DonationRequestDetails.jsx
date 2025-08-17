@@ -167,33 +167,31 @@ const DonationRequestDetails = () => {
 
       {/* DaisyUI Modal */}
       <dialog id="confirm_donation_modal" className="modal">
-        <div className="modal-box bg-white text-base-100">
+        <div className="modal-box bg-white text-black">
           <h3 className="font-bold text-lg text-center">
             Confirm Your Donation
           </h3>
           <form method="dialog" className="space-y-4 p-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-base-100 mr-2">Your Name</span>
+                <span className="label-text text-black mr-2">Your Name</span>
               </label>
               <input
                 type="text"
                 value={user?.displayName || ""}
                 readOnly
-                className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1"
+                className="input text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1"
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-base-100 mr-3">
-                  Your Email
-                </span>
+                <span className="label-text text-black mr-3">Your Email</span>
               </label>
               <input
                 type="email"
                 value={user?.email || ""}
                 readOnly
-                className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1"
+                className="input text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1"
               />
             </div>
             <div className="modal-action justify-center gap-2">

@@ -80,7 +80,7 @@ const AddBlog = () => {
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="input input-bordered w-input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                  className="input input-bordered w-input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   placeholder="Enter the blog title"
                   required
                 />
@@ -98,7 +98,7 @@ const AddBlog = () => {
                   type="url"
                   value={photoURL}
                   onChange={(e) => setPhotoURL(e.target.value)}
-                  className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                  className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   placeholder="https://example.com/image.jpg"
                   required
                 />
@@ -115,7 +115,7 @@ const AddBlog = () => {
               <JoditEditor
                 ref={editor}
                 value={content}
-                className="text-base-100"
+                className="text-black"
                 required
                 tabIndex={1}
                 onBlur={(newContent) => setContent(newContent)}

@@ -172,7 +172,7 @@ const Search = () => {
                       name="bloodGroup"
                       value={searchParams.bloodGroup}
                       onChange={handleChange}
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 "
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black "
                     >
                       <option value="">Any Group</option>
                       {bloodGroups.map((group) => (
@@ -194,7 +194,7 @@ const Search = () => {
                       name="district"
                       value={searchParams.district}
                       onChange={handleChange}
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 "
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black "
                     >
                       <option value="">Any District</option>
                       {districts.map((d) => (
@@ -217,7 +217,7 @@ const Search = () => {
                       value={searchParams.upazila}
                       onChange={handleChange}
                       disabled={!searchParams.district}
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black disabled:bg-gray-100 disabled:text-gray-500"
                     >
                       <option value="">Any Upazila</option>
                       {searchParams.district &&
@@ -299,7 +299,7 @@ const Search = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  <h2 className="text-2xl font-bold text-base-100 text-center mb-8">
+                  <h2 className="text-2xl font-bold text-black text-center mb-8">
                     Found{" "}
                     <span className="text-[#ef4343]">{donors.length}</span>{" "}
                     Matching Donor(s)

@@ -7,9 +7,9 @@ const ErrorPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-      console.error("404 Error: Page not found →", location.pathname);
-    }, [location.pathname]);
-  
+    console.error("404 Error: Page not found →", location.pathname);
+  }, [location.pathname]);
+
   return (
     <div className="bg-white min-h-screen flex flex-col justify-center items-center px-4 py-8">
       <div className="max-w-3xl">
@@ -17,7 +17,7 @@ const ErrorPage = () => {
       </div>
 
       <div className="text-center space-y-8 max-w-2xl">
-        <p className="text-lg leading-relaxed text-base-100">
+        <p className="text-lg leading-relaxed text-black">
           The page at
           <code className="px-2 py-1 rounded mx-1 text-[#ef4343]">
             {location.pathname}

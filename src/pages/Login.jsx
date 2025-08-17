@@ -157,7 +157,7 @@ const Login = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white shadow-lg rounded-lg p-8"
+          className="bg-white border border-gray-200 shadow-lg rounded-lg p-8 mb-8"
         >
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Login
@@ -187,7 +187,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                   placeholder="your.email@example.com"
-                  className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                  className="w-full text-black pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                 />
               </div>
             </motion.div>
@@ -215,7 +215,7 @@ const Login = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full text-base-100 pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                  className="w-full text-black pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                 />
                 <button
                   type="button"

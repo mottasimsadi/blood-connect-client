@@ -104,7 +104,7 @@ const Funding = () => {
                     >
                       <MdNavigateBefore className="text-xl" />
                     </button>
-                    <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                    <button className="join-item btn btn-sm pointer-events-none bg-transparent text-black mr-2 rounded-md">
                       Page {currentPage} / {totalPages}
                     </button>
                     <button

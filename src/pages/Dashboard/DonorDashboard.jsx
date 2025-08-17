@@ -123,7 +123,7 @@ const DonorDashboard = () => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-96">
-        <span className="loading loading-spinner loading-lg"></span>
+        <span className="loading loading-spinner loading-lg text-[#ef4343]"></span>
       </div>
     );
   }
@@ -145,15 +145,15 @@ const DonorDashboard = () => {
 
       {/* Donor's Recent Requests Section */}
       {recentRequests.length > 0 ? (
-        <div className="card bg-white text-base-100 shadow-xl border border-gray-200">
+        <div className="card bg-white text-black shadow-xl border border-gray-200">
           <div className="card-body">
-            <h2 className="card-title text-base-100 text-2xl mb-4">
+            <h2 className="card-title text-black text-2xl mb-4">
               Your Recent Donation Requests
             </h2>
             <div className="overflow-x-auto">
               <table className="table w-full">
                 {/* head */}
-                <thead className="text-base-100">
+                <thead className="text-black">
                   <tr>
                     <th>Recipient Name</th>
                     <th>Location</th>
@@ -269,7 +269,7 @@ const DonorDashboard = () => {
         <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
           <div className="card-body items-center text-center">
             <FaHeartbeat className="text-6xl text-[#ef4343] mb-4" />
-            <h2 className="card-title text-base-100 text-2xl">
+            <h2 className="card-title text-black text-2xl">
               No Donation Requests Yet
             </h2>
             <p className="text-[#64748b]">

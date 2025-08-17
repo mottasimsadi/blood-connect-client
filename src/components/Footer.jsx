@@ -162,26 +162,26 @@ const Footer = () => {
     { icon: FaLinkedin, href: "https://www.linkedin.com/" },
   ];
 
-const handleQuickLinkClick = (href) => {
-  if (href.startsWith("#")) {
-    if (isHomePage) {
-      // Smooth scroll on homepage
-      const element = document.getElementById(href.replace("#", ""));
-      if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+  const handleQuickLinkClick = (href) => {
+    if (href.startsWith("#")) {
+      if (isHomePage) {
+        // Smooth scroll on homepage
+        const element = document.getElementById(href.replace("#", ""));
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+      } else {
+        // Navigate to homepage first, then scroll
+        navigate("/", {
+          state: { scrollTo: href.replace("#", "") },
+          replace: true,
         });
       }
-    } else {
-      // Navigate to homepage first, then scroll
-      navigate("/", {
-        state: { scrollTo: href.replace("#", "") },
-        replace: true,
-      });
     }
-  }
-};
+  };
 
   const openModal = (index) => {
     setActiveModal(index);
@@ -194,7 +194,7 @@ const handleQuickLinkClick = (href) => {
 
   return (
     <motion.footer
-      className="bg-base-100 text-white"
+      className="bg-black text-white"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -402,7 +402,7 @@ const handleQuickLinkClick = (href) => {
           onClick={closeModal}
         >
           <motion.div
-            className="bg-white text-base-100 rounded-lg max-w-md w-full p-6 relative max-h-[80vh] overflow-y-auto"
+            className="bg-white text-black/90bg-black rounded-lg max-w-md w-full p-6 relative max-h-[80vh] overflow-y-auto"
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}

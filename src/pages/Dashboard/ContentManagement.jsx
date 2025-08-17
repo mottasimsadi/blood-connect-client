@@ -153,7 +153,7 @@ const ContentManagement = () => {
               </label>
               <select
                 id="statusFilter"
-                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-base-100 select-sm w-48"
+                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 pl-10 bg-white text-black select-sm w-48"
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
               >
@@ -176,7 +176,7 @@ const ContentManagement = () => {
                 {paginatedBlogs.map((blog) => (
                   <div
                     key={blog._id}
-                    className="card card-compact bg-white text-base-100 border-gray-300 shadow-xl border transition-shadow hover:shadow-2xl"
+                    className="card card-compact bg-white text-black border-gray-300 shadow-xl border transition-shadow hover:shadow-2xl"
                   >
                     <figure>
                       <img
@@ -260,7 +260,7 @@ const ContentManagement = () => {
                     >
                       <MdNavigateBefore className="text-xl" />
                     </button>
-                    <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+                    <button className="join-item btn btn-sm pointer-events-none bg-transparent text-black mr-2 rounded-md">
                       Page {currentPage} / {totalPages}
                     </button>
                     <button
@@ -281,7 +281,7 @@ const ContentManagement = () => {
             <div className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="card-body items-center text-center">
                 <FaMagnifyingGlass className="text-6xl text-[#ef4343] mb-4" />
-                <h3 className="card-title text-base-100 text-2xl">
+                <h3 className="card-title text-black text-2xl">
                   No Blog Posts Yet
                 </h3>
                 <p className="text-[#64748b] mt-2">

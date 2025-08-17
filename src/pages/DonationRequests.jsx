@@ -118,7 +118,7 @@ const DonationRequests = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-br from-[#ef4343]/5 via-white to-[#ef4343]/10 py-12"
+      className="min-h-screen dark:bg-gradient-to-br from-[#ef4343]/5 via-white to-[#ef4343]/10 py-12"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -156,7 +156,7 @@ const DonationRequests = () => {
                 placeholder="Search by name, location, blood group..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full text-base-100 pl-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                className="w-full text-black pl-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
               />
               <FaSearch
                 className="absolute left-3 top-3.5 text-gray-400"
@@ -168,7 +168,7 @@ const DonationRequests = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full bg-white text-base-100"
+                className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full bg-white text-black"
               >
                 <option value="newest">Sort by Newest</option>
                 <option value="oldest">Sort by Oldest</option>
@@ -308,7 +308,7 @@ const DonationRequests = () => {
               >
                 <MdNavigateBefore className="text-xl" />
               </button>
-              <button className="join-item btn btn-sm pointer-events-none bg-transparent text-base-100 mr-2 rounded-md">
+              <button className="join-item btn btn-sm pointer-events-none bg-transparent text-black mr-2 rounded-md">
                 Page {currentPage} / {totalPages}
               </button>
               <button

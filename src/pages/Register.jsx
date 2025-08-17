@@ -269,7 +269,7 @@ const Register = () => {
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="bg-white shadow-lg rounded-lg p-8"
+          className="bg-white border border-gray-200 shadow-lg rounded-lg p-8 mb-8"
         >
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Register
@@ -292,7 +292,7 @@ const Register = () => {
                     type="text"
                     required
                     placeholder="Enter your full name"
-                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.name}
                     onChange={handleChange}
                   />
@@ -314,7 +314,7 @@ const Register = () => {
                     type="email"
                     required
                     placeholder="your.email@example.com"
-                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.email}
                     onChange={handleChange}
                   />
@@ -338,7 +338,7 @@ const Register = () => {
                     name="phoneNumber"
                     type="tel"
                     placeholder="e.g., +880171..."
-                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.phoneNumber}
                     onChange={handleChange}
                   />
@@ -366,7 +366,7 @@ const Register = () => {
                     value={formData.photoURL}
                     onChange={handleChange}
                     placeholder="Enter your photo URL"
-                    className="w-full text-base-100 pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                   />
                 </div>
               </motion.div>
@@ -385,7 +385,7 @@ const Register = () => {
                 <div className="relative">
                   <FaTint className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
                   <select
-                    className="w-full text-base-100 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.bloodGroup}
                     onChange={(e) =>
                       handleSelectChange("bloodGroup", e.target.value)
@@ -414,7 +414,7 @@ const Register = () => {
                 <div className="relative">
                   <FaMapMarkerAlt className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
                   <select
-                    className="w-full text-base-100 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.district}
                     onChange={(e) =>
                       handleSelectChange("district", e.target.value)
@@ -445,7 +445,7 @@ const Register = () => {
               <div className="relative">
                 <FaCity className="absolute left-3 top-3 h-4 w-4 text-[#64748b] z-10" />
                 <select
-                  className="w-full text-base-100 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                  className="w-full text-black pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                   value={formData.upazila}
                   onChange={(e) =>
                     handleSelectChange("upazila", e.target.value)
@@ -492,7 +492,7 @@ const Register = () => {
                     type={showPassword ? "text" : "password"}
                     required
                     placeholder="Enter password"
-                    className="w-full text-base-100 pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.password}
                     onChange={handleChange}
                   />
@@ -538,7 +538,7 @@ const Register = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     required
                     placeholder="Confirm password"
-                    className="w-full text-base-100 pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
+                    className="w-full text-black pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ef4343] focus:border-transparent"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                   />

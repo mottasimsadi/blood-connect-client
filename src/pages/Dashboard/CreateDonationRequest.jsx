@@ -117,7 +117,7 @@ const CreateDonationRequest = () => {
   if (profileLoading) {
     return (
       <div className="flex justify-center items-center h-96">
-        <span className="loading loading-spinner loading-lg"></span>
+        <span className="loading loading-spinner loading-lg text-[#ef4343]"></span>
       </div>
     );
   }
@@ -136,7 +136,7 @@ const CreateDonationRequest = () => {
 
       {/* Form Card */}
       <div className="card bg-white shadow-xl border border-gray-200">
-        <div className="card-body text-base-100 p-6 md:p-8">
+        <div className="card-body text-black p-6 md:p-8">
           <div className="card-title text-2xl my-4 flex mx-auto">
             Donation Request Details
           </div>
@@ -149,7 +149,7 @@ const CreateDonationRequest = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Requester Name
                     </span>
                   </label>
@@ -159,13 +159,13 @@ const CreateDonationRequest = () => {
                       type="text"
                       value={user?.displayName || ""}
                       readOnly
-                      className="input input-bordered w-full pl-10 bg-gray-100 text-base-100"
+                      className="input input-bordered w-full pl-10 bg-gray-100 text-black"
                     />
                   </div>
                 </div>
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Requester Email
                     </span>
                   </label>
@@ -175,7 +175,7 @@ const CreateDonationRequest = () => {
                       type="email"
                       value={user?.email || ""}
                       readOnly
-                      className="input input-bordered w-full pl-10 bg-gray-100 text-base-100"
+                      className="input input-bordered w-full pl-10 bg-gray-100 text-black"
                     />
                   </div>
                 </div>
@@ -189,7 +189,7 @@ const CreateDonationRequest = () => {
               </h3>
               <div className="form-control">
                 <label className="label mb-2">
-                  <span className="label-text text-base-100 font-semibold">
+                  <span className="label-text text-black font-semibold">
                     Recipient's Name*
                   </span>
                 </label>
@@ -202,14 +202,14 @@ const CreateDonationRequest = () => {
                     onChange={handleChange}
                     placeholder="Enter recipient's full name"
                     required
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Recipient's District*
                     </span>
                   </label>
@@ -220,7 +220,7 @@ const CreateDonationRequest = () => {
                       value={formData.recipientDistrict}
                       onChange={handleChange}
                       required
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black"
                     >
                       <option value="">Select district</option>
                       {districts.map((d) => (
@@ -233,7 +233,7 @@ const CreateDonationRequest = () => {
                 </div>
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Recipient's Upazila*
                     </span>
                   </label>
@@ -245,7 +245,7 @@ const CreateDonationRequest = () => {
                       onChange={handleChange}
                       required
                       disabled={!formData.recipientDistrict}
-                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100  disabled:bg-gray-100 disabled:text-gray-500"
+                      className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black  disabled:bg-gray-100 disabled:text-gray-500"
                     >
                       <option value="">Select upazila</option>
                       {formData.recipientDistrict &&
@@ -268,7 +268,7 @@ const CreateDonationRequest = () => {
               <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Hospital Name*
                     </span>
                   </label>
@@ -281,13 +281,13 @@ const CreateDonationRequest = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Dhaka Medical College"
-                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                      className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                     />
                   </div>
                 </div>
                 <div className="form-control">
                   <label className="label mb-2">
-                    <span className="label-text text-base-100 font-semibold">
+                    <span className="label-text text-black font-semibold">
                       Full Address*
                     </span>
                   </label>
@@ -300,14 +300,14 @@ const CreateDonationRequest = () => {
                       onChange={handleChange}
                       required
                       placeholder="e.g., Zahir Raihan Rd, Dhaka"
-                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                      className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="form-control">
                     <label className="label mb-2">
-                      <span className="label-text text-base-100 font-semibold">
+                      <span className="label-text text-black font-semibold">
                         Blood Group*
                       </span>
                     </label>
@@ -318,7 +318,7 @@ const CreateDonationRequest = () => {
                         value={formData.bloodGroup}
                         onChange={handleChange}
                         required
-                        className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100"
+                        className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black"
                       >
                         <option value="" className="">
                           Select blood group
@@ -333,7 +333,7 @@ const CreateDonationRequest = () => {
                   </div>
                   <div className="form-control">
                     <label className="label mb-2">
-                      <span className="label-text text-base-100 font-semibold">
+                      <span className="label-text text-black font-semibold">
                         Donation Date*
                       </span>
                     </label>
@@ -345,13 +345,13 @@ const CreateDonationRequest = () => {
                         value={formData.donationDate}
                         onChange={handleChange}
                         required
-                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                        className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                       />
                     </div>
                   </div>
                   <div className="form-control">
                     <label className="label mb-2">
-                      <span className="label-text text-base-100 font-semibold">
+                      <span className="label-text text-black font-semibold">
                         Donation Time*
                       </span>
                     </label>
@@ -363,7 +363,7 @@ const CreateDonationRequest = () => {
                         value={formData.donationTime}
                         onChange={handleChange}
                         required
-                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+                        className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
                       />
                     </div>
                   </div>
@@ -374,7 +374,7 @@ const CreateDonationRequest = () => {
             {/* Request Message */}
             <div className="form-control">
               <label className="label mb-2">
-                <span className="label-text text-base-100 font-semibold">
+                <span className="label-text text-black font-semibold">
                   Request Message*
                 </span>
               </label>
@@ -386,7 +386,7 @@ const CreateDonationRequest = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="textarea pl-10 text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 w-full "
+                  className="textarea pl-10 text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 w-full "
                   placeholder="Please explain why you need blood and provide any additional details..."
                 ></textarea>
               </div>

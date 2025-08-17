@@ -510,7 +510,7 @@ const Home = () => {
                 >
                   <feature.icon className="h-10 w-10" />
                 </div>
-                <h3 className="text-xl text-base-100 font-semibold text-center mb-4">
+                <h3 className="text-xl text-black font-semibold text-center mb-4">
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 text-center">
@@ -680,7 +680,7 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 text-white">
+      <section className="py-20 px-4 bg-gray-100 text-white">
         <div className="max-w-7xl mx-auto p-8 sm:p-12 text-center rounded-2xl bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -766,7 +766,7 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-base-100 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4">
               Get in Touch
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -783,7 +783,7 @@ const Home = () => {
               className="card bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300"
             >
               <div className="card-body">
-                <h3 className="card-title text-2xl text-base-100 my-6">
+                <h3 className="card-title text-2xl text-black my-6">
                   Send us a Message
                 </h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -798,7 +798,7 @@ const Home = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Enter your full name"
-                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                        className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
                         required
                       />
                     </div>
@@ -812,7 +812,7 @@ const Home = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="your@email.com"
-                        className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                        className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
                         required
                       />
                     </div>
@@ -827,7 +827,7 @@ const Home = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+880-1234-567890"
-                      className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
+                      className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343]"
                       required
                     />
                   </div>
@@ -840,7 +840,7 @@ const Home = () => {
                       value={formData.message}
                       onChange={handleChange}
                       rows={5}
-                      className="textarea text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343] w-full "
+                      className="textarea text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#ef4343] w-full "
                       placeholder="How can we help you? Please describe your question or emergency..."
                       required
                     ></textarea>
@@ -886,7 +886,7 @@ const Home = () => {
                         <item.icon className="text-[#ef4343] text-xl" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-base-100 mb-1">
+                        <h3 className="text-lg font-semibold text-black mb-1">
                           {item.title}
                         </h3>
                         <p className="text-[#ef4343] font-medium mb-1">
@@ -971,7 +971,7 @@ const Home = () => {
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="your.email@example.com"
-                  className="input w-full text-base-100 bg-white border-none rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-white"
+                  className="input w-full text-black bg-white border-none rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-white"
                   required
                 />
                 <motion.button

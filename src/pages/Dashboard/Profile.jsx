@@ -291,7 +291,7 @@ const Profile = () => {
                         value={formData.photoURL}
                         onChange={handleChange}
                         placeholder="https://example.com/photo.jpg"
-                        className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
+                        className="input text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
                       />
                       <FaImage className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                     </div>
@@ -316,7 +316,7 @@ const Profile = () => {
                     value={formData.name}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 disabled:bg-gray-100 disabled:text-gray-500"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 disabled:bg-gray-100 disabled:text-gray-500"
                   />
                   <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
@@ -352,7 +352,7 @@ const Profile = () => {
                     value={formData.phoneNumber}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 disabled:bg-gray-100 disabled:text-gray-500"
+                    className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 disabled:bg-gray-100 disabled:text-gray-500"
                   />
                   <FaPhone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
                 </div>
@@ -369,7 +369,7 @@ const Profile = () => {
                     value={formData.bloodGroup}
                     onChange={handleSelectChange}
                     disabled={!isEditing}
-                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
+                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black disabled:bg-gray-100 disabled:text-gray-500"
                   >
                     <option value="">Select blood group</option>
                     {bloodGroups.map((group) => (
@@ -393,7 +393,7 @@ const Profile = () => {
                     value={formData.district}
                     onChange={handleSelectChange}
                     disabled={!isEditing}
-                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
+                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black disabled:bg-gray-100 disabled:text-gray-500"
                   >
                     <option value="">Select district</option>
                     {districts.map((d) => (
@@ -424,7 +424,7 @@ const Profile = () => {
                       !formData.district ||
                       !upazilas[formData.district]?.length
                     }
-                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-base-100 disabled:bg-gray-100 disabled:text-gray-500"
+                    className="select border border-gray-300 rounded-md focus:outline-none focus:ring-1 w-full pl-10 bg-white text-black disabled:bg-gray-100 disabled:text-gray-500"
                   >
                     <option value="">Select upazila</option>
                     {formData.district &&

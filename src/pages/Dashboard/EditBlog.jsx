@@ -85,16 +85,14 @@ const EditBlog = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-base-100 mb-2">
-                  Blog Title*
-                </span>
+                <span className="label-text text-black mb-2">Blog Title*</span>
               </label>
               <div className="relative">
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
+                  className="input text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
                   required
                 />
                 <FaPencilAlt className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
@@ -102,7 +100,7 @@ const EditBlog = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-base-100 mb-2">
+                <span className="label-text text-black mb-2">
                   Thumbnail Image URL*
                 </span>
               </label>
@@ -111,7 +109,7 @@ const EditBlog = () => {
                   type="url"
                   value={photoURL}
                   onChange={(e) => setPhotoURL(e.target.value)}
-                  className="input text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
+                  className="input text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10 w-full"
                   required
                 />
                 <FaImage className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 z-10" />
@@ -119,14 +117,14 @@ const EditBlog = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text text-base-100">Blog Content*</span>
+                <span className="label-text text-black">Blog Content*</span>
               </label>
               {content && (
                 <JoditEditor
                   key={content}
                   ref={editor}
                   value={content}
-                  className="text-base-100"
+                  className="text-black"
                   tabIndex={1}
                   onBlur={(newContent) => setContent(newContent)}
                   onChange={() => {}}

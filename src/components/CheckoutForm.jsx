@@ -115,14 +115,14 @@ const CheckoutForm = ({ closeModal, checkoutKey }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="form-control">
         <label className="label">
-          <span className="label-text text-base-100">Amount (USD)</span>
+          <span className="label-text text-black">Amount (USD)</span>
         </label>
         <div className="relative">
           <input
             type="number"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="input w-full text-base-100 bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
+            className="input w-full text-black bg-white border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 pl-10"
             placeholder="Enter amount"
             required
           />
@@ -132,7 +132,7 @@ const CheckoutForm = ({ closeModal, checkoutKey }) => {
 
       <div className="form-control">
         <label className="label">
-          <span className="label-text text-base-100">Card Information</span>
+          <span className="label-text text-black">Card Information</span>
         </label>
         <div className="p-3 border border-gray-300 rounded-lg">
           <CardElement options={{ style: { base: { fontSize: "16px" } } }} />

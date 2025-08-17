@@ -435,6 +435,114 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="card bg-white border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow duration-300"
+          >
+            <div className="card-body items-center text-center">
+              <h2 className="card-title text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                Voices of Our Community
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
+                Hear from donors and recipients who have been a part of our
+                life-saving mission.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="card bg-gradient-to-r from-[#ef4343] to-[#ff6b8b] text-white shadow-lg rounded-xl"
+                >
+                  <div className="card-body">
+                    <p className="italic">
+                      "This platform connected me with a donor in just a few
+                      hours. My father's life was saved, and I am forever
+                      grateful for the selfless act of a stranger."
+                    </p>
+                    <div className="flex items-center mt-4">
+                      <div className="avatar mr-4">
+                        <div className="w-12 rounded-full">
+                          <img
+                            src="https://i.pravatar.cc/150?img=1"
+                            alt="Anika Rahman"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-bold">Anika Rahman</p>
+                        <p className="text-sm">Recipient's Daughter</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="card bg-gradient-to-r from-[#ef4343] to-[#ff6b8b] text-white shadow-lg rounded-xl"
+                >
+                  <div className="card-body">
+                    <p className="italic">
+                      "BloodConnect streamlined the emergency request process at
+                      our hospital. Finding matching donors is faster and more
+                      reliable than ever, which is critical when seconds count."
+                    </p>
+                    <div className="flex items-center mt-4">
+                      <div className="avatar mr-4">
+                        <div className="w-12 rounded-full">
+                          <img
+                            src="https://i.pravatar.cc/150?img=5"
+                            alt="Dr. Fatima Khan"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-bold">Dr. Fatima Khan</p>
+                        <p className="text-sm">Partner Doctor</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="card bg-gradient-to-r from-[#ef4343] to-[#ff6b8b] text-white shadow-lg rounded-xl"
+                >
+                  <div className="card-body">
+                    <p className="italic">
+                      "Being a regular donor has been an incredibly fulfilling
+                      experience. The process is simple, and knowing you're
+                      making a real impact is the best feeling."
+                    </p>
+                    <div className="flex items-center mt-4">
+                      <div className="avatar mr-4">
+                        <div className="w-12 rounded-full">
+                          <img
+                            src="https://i.pravatar.cc/150?img=3"
+                            alt="Sameer Ahmed"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-bold">Sameer Ahmed</p>
+                        <p className="text-sm">Regular Donor</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 px-4 text-white">
         <div className="max-w-7xl mx-auto p-8 sm:p-12 text-center rounded-2xl bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b]">

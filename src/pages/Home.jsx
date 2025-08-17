@@ -146,6 +146,7 @@ const Home = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,6 +171,18 @@ const Home = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  // Handler for newsletter submission
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    await Swal.fire({
+      title: "Subscribed!",
+      text: "Thank you for joining our newsletter.",
+      icon: "success",
+      confirmButtonColor: "#ef4343",
+    });
+    setNewsletterEmail("");
   };
 
   return (
@@ -255,7 +268,6 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
             >
               {[
                 { icon: FaUsers, value: "10,000+", label: "Active Donors" },
@@ -268,7 +280,6 @@ const Home = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
                 >
                   <div className="card-body p-6 text-center">
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -605,6 +616,61 @@ const Home = () => {
               </motion.div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      <section id="newsletter" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="card bg-gradient-to-tr from-[#ef4343] to-[#ff6b8b] shadow-xl hover:shadow-2xl transition-shadow duration-300 py-8"
+          >
+            <div className="card-body items-center text-center">
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="text-3xl sm:text-4xl font-bold text-white mb-4"
+              >
+                Stay Connected
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-xl text-white/90 max-w-2xl mx-auto"
+              >
+                Subscribe to our newsletter for updates, success stories, and
+                donation events.
+              </motion.p>
+              <motion.form
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                onSubmit={handleNewsletterSubmit}
+                className="mt-6 flex flex-col sm:flex-row gap-4 items-center w-full max-w-md"
+              >
+                <input
+                  type="email"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  className="input w-full text-base-100 bg-white border-none rounded-md p-4 focus:outline-none focus:ring-2 focus:ring-white"
+                  required
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  type="submit"
+                  className="btn bg-white text-[#ef4343] border-none hover:bg-white/90 w-full sm:w-auto"
+                >
+                  Subscribe
+                </motion.button>
+              </motion.form>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
